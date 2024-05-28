@@ -5,8 +5,11 @@ import signUpRouter from "./routes/signup.js";
 import loginRouter from "./routes/login.js";
 import jwt from "jsonwebtoken";
 import userRouter from "./routes/userDetails.js";
+import dotenv from 'dotenv';
 
 
+
+dotenv.config();
 
 const app = express();
 
