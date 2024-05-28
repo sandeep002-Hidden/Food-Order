@@ -45,7 +45,7 @@ export default async function handelPostSignup(req, res) {
     await userData.save();
 
     const payload = { userData: { id: userData.id } };
-    jwt.sign(payload, "jwtSecret", { expiresIn: 360000 }, (err, token) => {
+    jwt.sign(payload, process.env.JWTSECRETE, { expiresIn: 360000 }, (err, token) => {
       if (err) throw err;
       return res.json({ token }).redirect("/login");
     });

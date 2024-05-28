@@ -24,7 +24,7 @@ export default async function handlePostLogin(req, res) {
     }
 
     const payload = { user: user._id };
-    jwt.sign(payload, "jwtSecret", { expiresIn: 360000 }, (err, token) => {
+    jwt.sign(payload, process.env.JWTSECRETE, { expiresIn: 360000 }, (err, token) => {
       if (err) throw err;
       return res.json({ token }).redirect("/");
     });
