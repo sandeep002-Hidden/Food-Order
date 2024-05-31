@@ -1,8 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
-import { json } from "react-router-dom";
 
-console.log(process.env.JWTSECRETE)
 export default async function handelGetUserDetails(req, res) {
   const token = req.header("x-auth-token");
   try {

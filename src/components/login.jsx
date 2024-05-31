@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 export default function Login() {
   const [userEmail, setEmail] = useState("");
   const [userPassword, setPassword] = useState("");
-  
+  const [message,setMessage]=useState("")
 
 
 
@@ -33,6 +33,7 @@ export default function Login() {
         navigate("/");
         console.log("Login successful");
       } else {
+        setMessage("Wrong userName or Password try again")
         console.error("Login failed");
       }
     } catch (error) {
@@ -40,7 +41,8 @@ export default function Login() {
     }
   };
   return (
-    <div className="h-screen w-screen flex justify-center items-center ">
+    <div className="h-screen w-screen flex flex-col justify-center items-center ">
+      <h1>{message}</h1>
       <div className="h-fit w-fit m-8 border-2 border-purple-500 rounded-lg p-4">
         <form
           onSubmit={handleSubmit}

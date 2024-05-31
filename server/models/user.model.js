@@ -42,6 +42,10 @@ const UserSchema=new mongoose.Schema({
     },
     OrderHistory:{
         type:Array,
+    },
+    isAdmin:{
+        type:Boolean,
+        default:false,
     }
     
 },{timestamps:true})
