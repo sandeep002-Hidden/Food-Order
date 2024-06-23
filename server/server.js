@@ -1,3 +1,4 @@
+import User from "./models/user.model.js";
 import express from "express";
 import cors from "cors";
 import connectDB from "./db.js";
@@ -5,9 +6,7 @@ import signUpRouter from "./routes/signup.js";
 import loginRouter from "./routes/login.js";
 import jwt from "jsonwebtoken";
 import userRouter from "./routes/userDetails.js";
-import dotenv from 'dotenv';
-
-
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -25,25 +24,27 @@ app.use(express.json());
 
 app.use("/signup", signUpRouter);
 app.use("/login", loginRouter);
-app.use("/user",userRouter)
-
+app.use("/user", userRouter);
 
 app.get("/", (req, res) => {
   res.json({ message: "Hello from server!" });
 });
 
-
-
-//For verification of jwt token
-app.get("/verify", (req, res) => {
+app.get("/verify", async (req, res) => {
   const token = req.header("x-auth-token");
   if (!token) {
     return res.status(401).json({ msg: "No token, authorization denied" });
   }
 
   try {
-    const decoded = jwt.verify(token,"jwtSecret");
-    return res.json(decoded);
+    const decoded = jwt.verify(token, "jwtSecret");
+    const user = decoded.user
+    await User.findOne({_id:user}).then((userData)=>{
+      return res.json({decoded,isAdmin:userData.isAdmin});
+    }).catch((error)=>{
+      console.log("Error")
+      console.log(error)
+    })
   } catch (err) {
     return res.status(401).json({ msg: "Token is not valid" });
   }

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Header from "./Header";
+import AdminHeader from "./AHeader";
 import { useNavigate } from "react-router-dom";
-import LoadingScreen from "./LoadingScreen";
+import LoadingScreen from "../LoadingScreen";
+
 const Profile = () => {
   const [message, setMessage] = useState(" ");
   const [profileData, setProfileData] = useState(null);
@@ -42,7 +43,11 @@ const Profile = () => {
   }, []);
 
   if (loading) {
-    return <LoadingScreen />;
+    return (
+      <>
+        <LoadingScreen />
+      </>
+    );
   }
   const editProfile = async () => {
     const btn = document.getElementById("editBtn");
@@ -94,10 +99,6 @@ const Profile = () => {
       }
     }
   };
-  const handelLogOut = () => {
-    localStorage.removeItem("token");
-    navigate("/");
-  };
   const deleteAccount = async () => {
     const token = localStorage.getItem("token");
     try {
@@ -124,7 +125,7 @@ const Profile = () => {
   };
   return (
     <>
-      <Header />
+      <AdminHeader />
       <h1 className="text-center my-2">{message}</h1>
       <div className="flex justify-center items-center my-8 font-serif overflow-x-hidden">
         <div className="w-4/5 h-screen flex justify-center items-top ">
@@ -205,7 +206,14 @@ const Profile = () => {
               <button id="deleteBtn" onClick={deleteAccount}>
                 Delete account
               </button>
-              <button onClick={handelLogOut}>Log Out</button>
+              <button
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  navigate("/");
+                }}
+              >
+                Log Out
+              </button>
             </div>
           </div>
         </div>

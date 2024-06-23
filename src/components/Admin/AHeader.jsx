@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import logo1 from "../images/logo1.jpg";
+import logo1 from "../../images/logo1.jpg";
 import { useNavigate } from "react-router-dom";
 
 
-export default function Header() {
+
+export default function AdminHeader(){
   const [message,setMessage]=useState()
   const navigate = useNavigate();
 
@@ -13,6 +14,7 @@ export default function Header() {
       try {
         const token = localStorage.getItem("token");
         if (!token) {
+          console("Login To continue")
           return;
         }
 
@@ -27,13 +29,8 @@ export default function Header() {
           setMessage("Error while verifying user, Login to continue");
           return;
         }
-        const data = await response.json();
-        if(data.isAdmin===true){
-          return navigate("/admin002")
-        }
         setVerificationResult(true);
       } catch (error) {
-        setMessage("User verification failed:", error);
         setVerificationResult({ error: error.message });
       }
     };
@@ -41,7 +38,7 @@ export default function Header() {
     verifyToken();
   }, []);
   const refer=()=>{
-    navigate("/")
+    navigate("/admin002")
   }
   return (
     <>
@@ -51,21 +48,23 @@ export default function Header() {
           <p className=" mx-4 text-2xl font-black font-serif" onClick={refer}>Order Now<span className="text-highlight text-3xl">.</span> </p>
         </div>
         <button>
-          <a href="/search">🔍 Search </a>
+          <a href="/admin002/search">🔍 Search </a>
         </button>
         <button>
-          <a href="/help"> 🙏🏼 Help</a>
+          <a href="/admin002/help"> 🙏🏼 Help</a>
         </button>
         <button>
-          <a href={verificationResult ? "/Profile" : "/login"}>
+          <a href={verificationResult ? "/admin002/Profile" : "/login"}>
             {verificationResult ? "Profile👤" : "Login🔐"}
           </a>
         </button>
         <button>
-          <a href="/myCart">🛒 Cart </a>
+          <a href="/admin002/addItems">😋 Add an Item</a>
         </button>
       </div>
       <h1>{message}</h1>
     </>
   );
+
+
 }

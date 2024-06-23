@@ -17,7 +17,6 @@ export default function Login() {
     const uData = { userEmail, userPassword };
 
     try {
-      console.log(uData);
       const res = await fetch("http://localhost:8000/login", {
         method: "POST",
         headers: {
@@ -25,19 +24,18 @@ export default function Login() {
         },
         body: JSON.stringify(uData),
       });
-      console.log("Waiting for res");
       const data = await res.json();
-      console.log(data.token);
       localStorage.setItem("token", data.token);
+      if(data.isAdmin===true){
+        navigate("/admin002")
+      }
       if (res.ok) {
         navigate("/");
-        console.log("Login successful");
       } else {
         setMessage("Wrong userName or Password try again")
-        console.error("Login failed");
       }
     } catch (error) {
-      console.log("Error: " + error.message);
+      setMessage("Error occur while verifying Your Information")
     }
   };
   return (

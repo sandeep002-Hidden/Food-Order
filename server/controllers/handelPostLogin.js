@@ -22,12 +22,18 @@ export default async function handlePostLogin(req, res) {
     if (!isPasswordMatch) {
       return res.status(400).json({ message: "Incorrect password." });
     }
-
     const payload = { user: user._id };
-    jwt.sign(payload, process.env.JWTSECRETE, { expiresIn: 360000 }, (err, token) => {
-      if (err) throw err;
-      return res.json({ token }).redirect("/");
-    });
+    jwt.sign(
+      payload,
+      process.env.JWTSECRETE,
+      { expiresIn: 360000 },
+      (err, token) => {
+        if (err) throw err;
+        else{
+        return res.json({ token,isAdmin:user.isAdmin }).redirect("/");
+        }
+      }
+    );
   } catch (error) {
     console.error(error);
     return res

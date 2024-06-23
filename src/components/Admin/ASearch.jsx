@@ -1,8 +1,9 @@
+import AdminHeader from "./AHeader";
 import React, { useState } from "react";
-import Header from "./Header";
 
-export default function Search() {
-  const [query, setQuery] = useState("");
+
+export default function AdminSearch(){
+    const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
 
   const handleInputChange = (event) => {
@@ -11,7 +12,7 @@ export default function Search() {
     handleSearch(newQuery);
   };
 
-  const handleSearch = async(searchQuery) => {
+  const handleSearch = (searchQuery) => {
     document.getElementById("searchResult").style.display = "block";
     const items = ["Biriyani", "Role", "Burger", "Pizza", "Chinese","Cake","Chicken","Chole","Momo","Mutton","Paneer"];
     const filteredResults = items.filter((item) =>
@@ -27,10 +28,10 @@ export default function Search() {
     console.log(item);
     setQuery("");
   };
-  return (
-    <>
-      <Header />
-      <div className="h-fit w-screen my-12 flex justify-center items-center">
+    return (
+        <>
+        <AdminHeader/>
+        <div className="h-fit w-screen my-12 flex justify-center items-center">
         <div className="">
           <input
             type="text"
@@ -58,6 +59,6 @@ export default function Search() {
           Search
         </button>
       </div>
-    </>
-  );
+        </>
+    )
 }
