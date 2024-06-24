@@ -1,46 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import biriyani from "../images/biriyani.png";
-import burger from "../images/burger.avif";
-import role from "../images/role.avif";
-import noodels from "../images/noodels.avif";
-import pizza from "../images/pizza.jpg";
-import cake from "../images/cake.jpg";
-import chicken from "../images/chicken.jpg";
-import chole from "../images/chole.jpg";
-import momo from "../images/momo.png";
-import mutton from "../images/mutton.png";
-import paneer from "../images/paneer.png";
+import ScrollableItem from "./ScrollableItem";
 
 export default function Home() {
   const [items, setItems] = useState([]);
-
-  const scrollableDivRef = useRef(null);
-
-  const scrollLeft = () => {
-    if (scrollableDivRef.current) {
-      scrollableDivRef.current.scrollBy({ left: -300, behavior: "smooth" });
-    }
-  };
-  const scrollRight = () => {
-    if (scrollableDivRef.current) {
-      scrollableDivRef.current.scrollBy({ left: 300, behavior: "smooth" });
-    }
-  };
-  const mainItems = [
-    { itemImage: biriyani, ItemName: "Biriyani" },
-    { itemImage: role, ItemName: "Role" },
-    { itemImage: burger, ItemName: "Burger" },
-    { itemImage: pizza, ItemName: "Pizza" },
-    { itemImage: noodels, ItemName: "Chinese" },
-    { itemImage: cake, ItemName: "Cake" },
-    { itemImage: chicken, ItemName: "Chicken" },
-    { itemImage: chole, ItemName: "Chole" },
-    { itemImage: momo, ItemName: "momo" },
-    { itemImage: mutton, ItemName: "Mutton" },
-    { itemImage: paneer, ItemName: "paneer" },
-  ];
+  
+  
+  
   const getItems = async () => {
     const items = await fetch("http://localhost:8000/user/getItems", {
       method: "GET",
@@ -97,38 +64,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <div className="h-64 my-8 flex justify-around items-center  flex-col">
-        <div className="h-4 w-3/4 flex justify-between items-center">
-          <p className="w-3/4 font-bold text-xl text-left mx-6">
-            Have a Look 😋 <span className="text-highlight">?</span>
-          </p>
-          <div className="flex justify-center items-center w-1/4">
-            <div>
-              <button onClick={scrollLeft}>⬅️</button>
-            </div>
-            <div>
-              <button onClick={scrollRight}>➡️</button>
-            </div>
-          </div>
-        </div>
-        <div
-          ref={scrollableDivRef}
-          className="h-52 w-3/4 flex justify-between items-center overflow-x-scroll no-scrollbar"
-        >
-          <div className="w-fit flex justify-center items-center">
-            {mainItems.map((item) => (
-              <div className="h-48 w-48 border border-black mx-6 flex justify-center items-center rounded-lg flex-col">
-                <img
-                  src={item.itemImage}
-                  alt={item.ItemName}
-                  className="h-32"
-                />
-                <h1>{item.ItemName}</h1>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      <ScrollableItem/>
       <div className=" h-fit  flex justify-center items-center  no-scrollbar">
         <div className="w-3/4 h-fit grid grid-cols-4 gap-4 ">
           {items.map((i) => (

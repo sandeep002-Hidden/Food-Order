@@ -37,6 +37,9 @@ export default function MyCart() {
         },
       });
       const data = await items.json();
+      if(data.length===0){
+        setGoodMessage("Empty Cart")
+      }
       setMyCart(data);
 
       return;
@@ -73,8 +76,8 @@ export default function MyCart() {
   return (
     <>
       <Header />
-      <h1 className="text-center text-red-500 font-bold">{message}</h1>
-      <h1 className="text-center text-green-500 font-bold">{goodMessage}</h1>
+      <h1 className="text-center text-red-500 text-2xl font-bold">{message}</h1>
+      <h1 className="text-center text-green-500 text-2xl font-bold">{goodMessage}</h1>
 
       <div className="h-fit overflow-y-hidden flex justify-center items-center flex-col">
         {myCart.map((item, index) => (

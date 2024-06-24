@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Header from "./Header";
+import ScrollableItem from "./ScrollableItem";
+import Footer from "./Footer";
 
 export default function Search() {
   const [query, setQuery] = useState("");
@@ -30,7 +32,7 @@ export default function Search() {
   return (
     <>
       <Header />
-      <div className="h-fit w-screen my-12 flex justify-center items-center">
+      <div className="h-fit my-12 flex justify-center items-center">
         <div className="">
           <input
             type="text"
@@ -58,6 +60,12 @@ export default function Search() {
           Search
         </button>
       </div>
+      <ScrollableItem />
+      <div className=" h-96 bg-red-300 flex justify-center items-center">
+        <div className="w-3/4 h-full bg-slate-600"></div>
+      </div>
+      <Footer/>
+
     </>
   );
 }

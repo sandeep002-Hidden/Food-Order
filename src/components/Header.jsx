@@ -65,7 +65,7 @@ export default function Header() {
           <a href="/myCart">🛒 Cart </a>
         </button>
       </div>
-      <h1>{message}</h1>
+      <h1 className="text-center text-red-500">{message}</h1>
     </>
   );
 }

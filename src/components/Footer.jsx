@@ -3,7 +3,7 @@ export default function Footer() {
     <>
       <div className="h-42 bg-gray-50">
         
-        <div className="w-11/12 h-full">
+        <div className="w-11/12 h-full text-center">
             Footer
         </div>
       </div>
