@@ -73,10 +73,11 @@ export default function Home() {
                 key={i._id}
                 src={i.ImageLink}
                 alt={i.ItemName}
-                className="rounded-t-xl"
+                className="rounded-t-xl h-32"
               />
               <div className="py-1 px-2">
                 <h1 className="font-bold text-highlight">{i.ItemName}</h1>
+                <h1 className="font-bold">{i.ItemPrice} ₹</h1>
                 <h1 className="font-bold">⭐4.5/5.0</h1>
                 <h1 className="font-medium h-6 overflow-hidden">
                   {i.ItemDescription}

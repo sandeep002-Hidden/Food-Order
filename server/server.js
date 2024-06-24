@@ -7,6 +7,7 @@ import loginRouter from "./routes/login.js";
 import jwt from "jsonwebtoken";
 import userRouter from "./routes/userDetails.js";
 import dotenv from "dotenv";
+import adminRouter from "./routes/adminRoute.js";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use("/signup", signUpRouter);
 app.use("/login", loginRouter);
 app.use("/user", userRouter);
+app.use("/admin",adminRouter)
 
 app.get("/", (req, res) => {
   res.json({ message: "Hello from server!" });

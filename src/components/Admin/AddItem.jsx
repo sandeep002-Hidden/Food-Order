@@ -5,14 +5,19 @@ export default function AddItem() {
   const [ItemName, setItemName] = useState();
   const [ItemDescription, setItemDescription] = useState();
   const [ImageLink, setImageLink] = useState();
+  const [ItemPrice, setItemPrice] = useState();
+  const [TypeOfDish, setTypeOfDish] = useState();
   const [message, setMessage] = useState();
   const addItem = async () => {
-    const itemData = { ItemName, ItemDescription, ImageLink };
+    const TypeOfDish1=TypeOfDish.split(",")
+    const itemData = { ItemName,ItemPrice, ItemDescription, ImageLink,TypeOfDish1 };
     setItemName("");
     setItemDescription("");
     setImageLink("");
+    setItemPrice("")
+    setTypeOfDish("")
     try {
-      const res = await fetch("http://localhost:8000/user/admin/addItems", {
+      const res = await fetch("http://localhost:8000/admin/addItems", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -47,6 +52,20 @@ export default function AddItem() {
             />
           </div>
           <div>
+            <span>Enter the Item Price</span>
+            <input
+              type="text"
+              value={ItemPrice}
+              name="ItemPrice"
+              onChange={(e) => {
+                setItemPrice(e.target.value);
+              }}
+              required
+              className="outline-none border border-highlight"
+            />
+          </div>
+          
+          <div>
             <span>Enter item Image Link</span>
 
             <input
@@ -55,6 +74,20 @@ export default function AddItem() {
               value={ImageLink}
               onChange={(e) => {
                 setImageLink(e.target.value);
+              }}
+              className="outline-none border border-highlight"
+              required
+            />
+          </div>
+          <div>
+            <span>Enter the type of dish separated by spaces</span>
+
+            <input
+              type="url"
+              name="ImageLink"
+              value={TypeOfDish}
+              onChange={(e) => {
+                setTypeOfDish(e.target.value);
               }}
               className="outline-none border border-highlight"
               required

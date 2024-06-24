@@ -24,7 +24,6 @@ export default async function cartItems(req, res) {
 
     return res.json(cartItems);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: "Error while fetching cart items" });
   }
 }

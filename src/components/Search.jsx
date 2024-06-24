@@ -61,7 +61,7 @@ export default function Search() {
         </button>
       </div>
       <ScrollableItem />
-      <div className=" h-96 bg-red-300 flex justify-center items-center">
+      <div className=" h-96 flex justify-center items-center">
         <div className="w-3/4 h-full bg-slate-600"></div>
       </div>
       <Footer/>

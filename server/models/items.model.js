@@ -12,12 +12,11 @@ const ItemSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    TypeOfDish:{
-        type:Array,
-        required:true
-    },
     ItemDescription:{
         type:String
+    },
+    TypeOfDish:{
+        type:Array,
     }
 },{timestamps:true})
 
