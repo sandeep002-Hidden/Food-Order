@@ -56,7 +56,6 @@ export default function Login() {
           });
           const emailResponse = await emailRes.json();
           setActualOtp(emailResponse.Otp);
-          console.log(emailResponse)
         } catch (error) {
           setMessage(
             "Error occur while sending email , try again after some time"
