@@ -8,6 +8,8 @@ import jwt from "jsonwebtoken";
 import userRouter from "./routes/userDetails.js";
 import dotenv from "dotenv";
 import adminRouter from "./routes/adminRoute.js";
+import sendEmail from "./middleware/nodeMailer.js";
+
 
 dotenv.config();
 
@@ -27,6 +29,7 @@ app.use("/signup", signUpRouter);
 app.use("/login", loginRouter);
 app.use("/user", userRouter);
 app.use("/admin",adminRouter)
+app.use("/sendEmail",sendEmail)
 
 app.get("/", (req, res) => {
   res.json({ message: "Hello from server!" });

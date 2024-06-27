@@ -3,39 +3,68 @@ import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [userEmail, setEmail] = useState("");
-  const [userPassword, setPassword] = useState("");
-  const [message,setMessage]=useState("")
-
-
-
-
+  const [userOtp, setUserOtp] = useState("");
+  const [message, setMessage] = useState("");
+  const [flag, setFlag] = useState(false);
+  const [actualOtp, setActualOtp] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (flag) {
+      setEmail("");
+      setUserOtp("");
+      if (userOtp == actualOtp) {
+        const uData = { userEmail };
 
-    const uData = { userEmail, userPassword };
-
-    try {
-      const res = await fetch("http://localhost:8000/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(uData),
-      });
-      const data = await res.json();
-      localStorage.setItem("token", data.token);
-      if(data.isAdmin===true){
-        navigate("/admin002")
+        try {
+          const res = await fetch("http://localhost:8000/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(uData),
+          });
+          const data = await res.json();
+          localStorage.setItem("token", data.token);
+          if (data.isAdmin === true) {
+            navigate("/admin002");
+          }
+          if (res.ok) {
+            navigate("/");
+          } else {
+            setMessage("Wrong userName or Password try again");
+          }
+        } catch (error) {
+          setMessage("Error occur while verifying Your Information");
+        }
       }
-      if (res.ok) {
-        navigate("/");
-      } else {
-        setMessage("Wrong userName or Password try again")
+      else{
+        setMessage("Wrong Otp")
       }
-    } catch (error) {
-      setMessage("Error occur while verifying Your Information")
+    } else {
+      setFlag(true);
+      const Email = { userEmail };
+      const sendmail = async (email) => {
+        try {
+          const emailRes = await fetch("http://localhost:8000/sendEmail", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(Email),
+          });
+          const emailResponse = await emailRes.json();
+          setActualOtp(emailResponse.Otp);
+          console.log(emailResponse)
+        } catch (error) {
+          setMessage(
+            "Error occur while sending email , try again after some time"
+          );
+          console.log(error);
+        }
+      };
+      sendmail(userEmail);
     }
   };
   return (
@@ -51,24 +80,26 @@ export default function Login() {
             name="userEmail"
             id="userEmail"
             placeholder="Enter Your Email id"
-            className="border border-black rounded-lg block h-12 w-64 p-1 m-4"
+            className="border border-black rounded-lg  h-12 w-64 p-1 m-4"
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <input
-            type="password"
-            name="userPassword"
-            id="userPassword"
-            placeholder="Enter Your Password"
-            className="border border-black rounded-lg block h-12 w-64 p-1 m-4"
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <input
-            type="submit"
-            value="Enter"
+          {flag && (
+            <input
+              type="text"
+              name="userPassword"
+              placeholder="Enter Your Password"
+              className="border border-black rounded-lg block h-12 w-64 p-1 m-4"
+              onChange={(e) => setUserOtp(e.target.value)}
+              required
+            />
+          )}
+          <button
             className="border border-black rounded-lg block px-5 py-2"
-          />
+            onClick={handleSubmit}
+          >
+            {flag ? "Enter" : "Send Otp for Verification"}
+          </button>
         </form>
         <h2 className="text-center">
           Forgot your password?
