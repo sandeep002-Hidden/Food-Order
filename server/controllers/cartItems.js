@@ -21,9 +21,8 @@ export default async function cartItems(req, res) {
 
     const cartItemIds = user.Cart;
     const cartItems = await Item.find({ _id: { $in: cartItemIds } });
-
     return res.json(cartItems);
   } catch (error) {
-    res.status(500).json({ message: "Error while fetching cart items" });
+    res.status(500).json({ message: "Error while fetching cart items",Error:error });
   }
 }

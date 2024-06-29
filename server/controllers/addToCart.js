@@ -2,7 +2,7 @@ import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 
 export default async function addToCart(req, res) {
-    const itemId = req.body.id;
+    const itemId = req.body.id.id
     const token = req.body.token;
     const decodedToken = jwt.verify(token, process.env.JWTSECRETE);
     await User.updateOne(

@@ -25,7 +25,6 @@ export default function AdminSearch(){
     document.getElementById("searchResult").style.display = "none";
   };
   const findItem = (item) => {
-    console.log(item);
     setQuery("");
   };
     return (

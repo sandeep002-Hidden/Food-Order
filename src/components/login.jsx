@@ -87,7 +87,7 @@ export default function Login() {
             <input
               type="text"
               name="userPassword"
-              placeholder="Enter Your Password"
+              placeholder="Enter Otp "
               className="border border-black rounded-lg block h-12 w-64 p-1 m-4"
               onChange={(e) => setUserOtp(e.target.value)}
               required

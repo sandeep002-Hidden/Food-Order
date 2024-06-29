@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import Footer from "./Footer";
 
 import biriyani from "../images/biriyani.png";
 import burger from "../images/burger.avif";
@@ -13,9 +12,6 @@ import chole from "../images/chole.jpg";
 import momo from "../images/momo.png";
 import mutton from "../images/mutton.png";
 import paneer from "../images/paneer.png";
-
-
-
 
 export default function ScrollableItem() {
   const navigate = useNavigate();
@@ -44,11 +40,11 @@ export default function ScrollableItem() {
       scrollableDivRef.current.scrollBy({ left: 300, behavior: "smooth" });
     }
   };
-  const searchItem=(index)=>{
-    const item=mainItems[index].ItemName
-    console.log(item)
-    navigate(`/search?findItem=${item}`)
-  }
+  const searchItem = async (index) => {
+    const item = mainItems[index].ItemName;
+    navigate(`/search`);
+    
+  };
   return (
     <>
       <div className="h-64 my-8 flex justify-around items-center  flex-col">
@@ -70,9 +66,12 @@ export default function ScrollableItem() {
           className="h-52 w-3/4 flex justify-between items-center overflow-x-scroll no-scrollbar"
         >
           <div className="w-fit flex justify-center items-center">
-            {mainItems.map((item,index) => (
-              <div className="h-48 w-48 border border-black mx-6 flex justify-center items-center rounded-lg flex-col"
-              onClick={()=>{searchItem(index)}}
+            {mainItems.map((item, index) => (
+              <div
+                className="h-48 w-48 border border-black mx-6 flex justify-center items-center rounded-lg flex-col"
+                onClick={() => {
+                  searchItem(index);
+                }}
               >
                 <img
                   src={item.itemImage}

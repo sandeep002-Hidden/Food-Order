@@ -24,8 +24,6 @@ export default function AddItem() {
         },
         body: JSON.stringify(itemData),
       });
-      const data=await res.json()
-      console.log(data.message)
       setMessage("Added item success fully")
     } catch (e) {
       console.log(e);

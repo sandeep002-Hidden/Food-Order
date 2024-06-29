@@ -83,7 +83,7 @@ export default function MyCart() {
         {myCart.map((item, index) => (
           <div
             key={item._id}
-            className=" h-36 w-10/12 border border-purple-500 rounded-xl flex justify-around items-center m-4"
+            className=" h-36 w-10/12 border border-purple-500 rounded-xl flex justify-around items-center m-4 overflow-hidden"
           >
             <img src={item.ImageLink} alt={item.ItemName} className=" w-48" />
             <div className="w-1/2">
