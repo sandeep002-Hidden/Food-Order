@@ -1,7 +1,7 @@
 export default function BuyNowBtn(id) {
   const buyNow = async (id) => {
     if (localStorage.getItem("token")) {
-        console.log(id.id)
+      console.log(id.id);
     } else {
       alert("Login to Purchase to Your cart");
     }

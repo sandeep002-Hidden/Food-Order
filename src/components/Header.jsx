@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import logo1 from "../images/logo1.jpg";
 import { useNavigate } from "react-router-dom";
 
-
 export default function Header() {
-  const [message,setMessage]=useState()
+  const [message, setMessage] = useState();
   const navigate = useNavigate();
 
   const [verificationResult, setVerificationResult] = useState(false);
@@ -15,7 +14,7 @@ export default function Header() {
         if (!token) {
           return;
         }
-        const response = await fetch("http://localhost:8000/verify", {
+        const response = await fetch("http://192.168.2.182:8000/verify", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -27,8 +26,8 @@ export default function Header() {
           return;
         }
         const data = await response.json();
-        if(data.isAdmin===true){
-          return navigate("/admin002")
+        if (data.isAdmin === true) {
+          return navigate("/admin002");
         }
         setVerificationResult(true);
       } catch (error) {
@@ -39,30 +38,49 @@ export default function Header() {
 
     verifyToken();
   }, []);
-  const refer=()=>{
-    navigate("/")
-  }
   return (
     <>
-      <div className="h-16  border-b border-highlight flex justify-around items-center font-medium overflow-hidden bg-white">
-        <div className="w-1/3 h-full flex justify-center items-center">
-          <img src={logo1} alt="Logo" className="h-12 rounded-lg" />
-          <p className=" mx-4 text-2xl font-black font-serif" onClick={refer}>Order Now<span className="text-highlight text-3xl">.</span> </p>
+      <div className="h-16 border-b border-highlight flex justify-around items-center font-medium overflow-hidden text-sm">
+        <div className="w-11/12 h-full flex justify-around items-center">
+          <div className="w-5/12 h-11/ flex justify-center items-center">
+            <img src={logo1} alt="Logo" className="h-8 rounded-lg" />
+            <p
+              className=" md:mx-4 font-black font-serif text-nowrap flex justify-center items-end md:text-2xl"
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              Order Now
+              <span className="text-highlight flex justify-center items-center text-3xl">
+                .
+              </span>
+            </p>
+          </div>
+          <button>
+            <a href="/search" className="text-nowrap text-xs font-bold md:text-base">
+              🔍Search{" "}
+            </a>
+          </button>
+          <button>
+            <a href="/help" className="text-nowrap text-xs font-bold md:text-base">
+              {" "}
+              🙏🏼Help
+            </a>
+          </button>
+          <button>
+            <a
+              href={verificationResult ? "/Profile" : "/login"}
+              className="text-nowrap text-xs font-bold md:text-base"
+            >
+              {verificationResult ? "👤Profile" : "🔐Login"}
+            </a>
+          </button>
+          <button>
+            <a href="/myCart" className="text-nowrap text-xs font-bold md:text-base">
+              🛒Cart{" "}
+            </a>
+          </button>
         </div>
-        <button>
-          <a href="/search">🔍 Search </a>
-        </button>
-        <button>
-          <a href="/help"> 🙏🏼 Help</a>
-        </button>
-        <button>
-          <a href={verificationResult ? "/Profile" : "/login"}>
-            {verificationResult ? "Profile👤" : "Login🔐"}
-          </a>
-        </button>
-        <button>
-          <a href="/myCart">🛒 Cart </a>
-        </button>
       </div>
       <h1 className="text-center text-red-500">{message}</h1>
     </>

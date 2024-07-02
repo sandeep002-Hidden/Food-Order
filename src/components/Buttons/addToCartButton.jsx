@@ -6,7 +6,7 @@ export default function AddToCart(id){
           const idObj={id:id,token:token}
           try {
             const addToCartRes = await fetch(
-              "http://localhost:8000/user/addToCart",
+              "http://192.168.2.182:8000/user/addToCart",
               {
                 method: "POST",
                 headers: {
@@ -25,7 +25,7 @@ export default function AddToCart(id){
     return(
         <>
         <button
-                    className="w-fit h-10 border-2 border-purple-500 rounded-lg p-2"
+                    className="w-fit h-10 border-2 text-nowrap border-purple-500 rounded-lg p-2"
                     onClick={() => addToCart(id)}
                   >
                     Add to Cart

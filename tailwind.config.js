@@ -6,6 +6,9 @@ module.exports = {
       colors: {
         highlight: "rgb(110, 6, 242)",
       },
+      minHeight: {
+        '50vh': '50vh', // Custom minHeight utility
+      },
     },
   },
   plugins: [

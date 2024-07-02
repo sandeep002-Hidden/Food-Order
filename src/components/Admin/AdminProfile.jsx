@@ -18,7 +18,7 @@ const Profile = () => {
       }
 
       try {
-        const response = await fetch("http://localhost:8000/user/profile", {
+        const response = await fetch("http://192.168.2.182:8000/admin/getDetails", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -29,8 +29,8 @@ const Profile = () => {
         if (!response.ok) {
           throw new Error("Error while verifying token");
         }
-
         const data = await response.json();
+        console.log(data.user)
         setProfileData(data.user);
       } catch (error) {
         setMessage(error.message);
@@ -76,7 +76,7 @@ const Profile = () => {
       };
       try {
         const response = await fetch(
-          "http://localhost:8000/user/updateProfile",
+          "http://192.168.2.182:8000/admin/updateProfile",
           {
             method: "post",
             headers: {
@@ -102,7 +102,7 @@ const Profile = () => {
   const deleteAccount = async () => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch("http://localhost:8000/user/deleteAccount", {
+      const response = await fetch("http://192.168.2.182:8000/admin/deleteAccount", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -118,6 +118,7 @@ const Profile = () => {
         );
       }
     } catch (error) {
+      console.log(error)
       setMessage(
         "Error occur while updating Profile Details. Please try again!"
       );
@@ -135,7 +136,7 @@ const Profile = () => {
                 👤 Hello
               </h1>
               <h1 className="px-12 font-black text-xl">
-                {profileData.userName}
+                {profileData.SellerName}
               </h1>
               <p className="p-3"></p>
             </div>
@@ -145,17 +146,12 @@ const Profile = () => {
                 <p className="my-2">Country-{profileData.Country}</p>
                 <p className="my-2">State-{profileData.State}</p>
                 <p className="my-2">District-{profileData.District}</p>
-                <p className="my-2">Pin-{profileData.Pin}</p>
+                <p className="my-2">Pin-{profileData.pin}</p>
                 <p className="my-2">Location-{profileData.Location}</p>
               </div>
             </div>
             <div className="border-double border-2 border-highlight rounded-2xl">
               <h1 className="w-full mx-8 font-black text-lg">Order History</h1>
-              <div>
-                {profileData.OrderHistory.map((item) => (
-                  <div>{item}</div>
-                ))}
-              </div>
             </div>
           </div>
           <div className="w-3/4 h-fit border-double border-2 border-highlight rounded-2xl px-6 py-2">
@@ -170,7 +166,7 @@ const Profile = () => {
               <input
                 type="text"
                 className="profileDetails outline-none w-96 px-4 py-2 m-2 font-black text-black border border-black rounded-xl"
-                placeholder={profileData.userName}
+                placeholder={profileData.SellerName}
                 id="newName"
                 readOnly
                 required
@@ -182,7 +178,7 @@ const Profile = () => {
               <input
                 type="email"
                 className="profileDetails outline-none w-96 px-4 py-2 m-2 font-black text-black border border-black  rounded-xl"
-                placeholder={profileData.userEmail}
+                placeholder={profileData.SellerEmail}
                 id="newEmail"
                 readOnly
                 required
@@ -192,7 +188,7 @@ const Profile = () => {
               <input
                 type="number"
                 className="profileDetails outline-none w-96 px-4 py-2 m-2 font-black text-black border border-black  rounded-xl"
-                placeholder={profileData.phoneNo}
+                placeholder={profileData.PhoneNo}
                 id="newMobileNo"
                 readOnly
                 required

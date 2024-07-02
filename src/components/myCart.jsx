@@ -31,7 +31,7 @@ export default function MyCart() {
         setMessage("Login to continue");
       }
       try {
-        const items = await fetch("http://localhost:8000/user/getCartItems", {
+        const items = await fetch("http://192.168.2.182:8000/user/getCartItems", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -56,7 +56,7 @@ export default function MyCart() {
     const removeItem = myCart[index];
     const body = { token, removeItem };
     const removeRes = await fetch(
-      "http://localhost:8000/user/removeItemFromCart",
+      "http://192.168.2.182:8000/user/removeItemFromCart",
       {
         method: "DELETE",
         headers: {

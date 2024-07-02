@@ -15,7 +15,6 @@ import paneer from "../images/paneer.png";
 import AddToCart from "./Buttons/addToCartButton";
 import BuyNowBtn from "./Buttons/buyNow";
 
-
 export default function Search() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
@@ -70,10 +69,9 @@ export default function Search() {
     document.getElementById("searchResult").style.display = "none";
   };
   const findItem = async (item) => {
-    setQuery("");
-    const Item = { Item: item };
+    const Item = { Item: item.toLowerCase() };
     try {
-      const resultIem = await fetch("http://localhost:8000/user/findItem", {
+      const resultIem = await fetch("http://192.168.2.182:8000/user/findItem", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -96,13 +94,13 @@ export default function Search() {
             value={query}
             onChange={handleInputChange}
             placeholder="Search..."
-            className="border-2 w-96 outline-highlight border-highlight h-12 p-2 rounded-md"
+            className="border-2 w-44 sm:w-72 md:w-96 outline-highlight border-highlight h-12 p-2 rounded-md"
           />
           <div id="searchResult" className="">
             {results.map((result, index) => (
               <div
                 key={index}
-                className="search-result-item w-96 h-8 border rounded-md border-blue-400 p-2"
+                className="search-result-item sm:w-72 md:w-96 h-8 border rounded-md border-blue-400 p-2"
                 onClick={() => handelClick(result)}
               >
                 {result}
@@ -119,11 +117,10 @@ export default function Search() {
           </button>
         </div>
       </div>
-      {/* scrollable div */}
       <div className="h-42 flex justify-around items-center  flex-col">
         <div
           ref={scrollableDivRef}
-          className="h-52 bg-gray-100 w-3/4 flex justify-between items-center overflow-x-scroll no-scrollbar"
+          className="h-52 md:bg-gray-100 w-3/4 flex justify-between items-center overflow-x-scroll no-scrollbar"
         >
           <div className="w-fit flex justify-center items-center">
             {mainItems.map((item, index) => (
@@ -145,26 +142,32 @@ export default function Search() {
         </div>
       </div>
       {/*  */}
-      <div className="flex justify-center items-center">
-        <div className="w-3/4 h-full">
+      <div className="flex justify-center min-h-50vh items-start">
+        <div className="w-11/12 md:w-3/4 h-full">
           {itemResult.map((item, index) => (
-            <div className="flex justify-around items-center h-48  rounded-xl border border-highlight">
-              <div>
-                <img
-                  src={item.ImageLink}
-                  alt={item.ItemName}
-                  className="h-32 rounded-lg"
-                />
-              </div>
-              <div className="h-32 flex justify-around items-start flex-col">
-                <p className=" text-highlight font-bold text-xl">{item.ItemName}</p>
-                <p className="text-xl font-bold">{item.ItemPrice}</p>
-                <p className=" text-yellow-600 text-lg font-semibold">⭐4.5/5</p>
-                <p className="text-sm">{item.ItemDescription}</p>
+            <div className="flex m-2 justify-around items-center h-36  rounded-xl border border-highlight">
+              <div className="flex justify-center items-center ">
+                <div>
+                  <img
+                    src={item.ImageLink}
+                    alt={item.ItemName}
+                    className="w-64 h-24 md:h-32 rounded-lg md:w-44 mx-2"
+                  />
+                </div>
+                <div className="h-32 flex justify-around items-start flex-col w-32 md:w-64 mx-2 p-2">
+                  <p className="text-highlight font-bold text-base md:text-xl text-nowrap">
+                    {item.ItemName}
+                  </p>
+                  <p className="md:text-xl font-bold text-sm">{item.ItemPrice}</p>
+                  <p className=" text-yellow-600 text-xs md:text-lg font-semibold">
+                    ⭐4.5/5
+                  </p>
+                  <p className="text-sm h-5 overflow-clip">{item.ItemDescription}</p>
+                </div>
               </div>
               <div className="h-32 flex justify-around items-center flex-col">
-                <AddToCart id={item._id}/>
-                <BuyNowBtn id={item._id}/>
+                <AddToCart id={item._id} />
+                <BuyNowBtn id={item._id} />
               </div>
             </div>
           ))}

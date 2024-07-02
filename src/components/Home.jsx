@@ -9,7 +9,7 @@ export default function Home() {
   const [items, setItems] = useState([]);
 
   const getItems = async () => {
-    const items = await fetch("http://localhost:8000/user/getItems", {
+    const items = await fetch("http://192.168.2.182:8000/user/getItems", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -39,17 +39,17 @@ export default function Home() {
     <>
       <Header />
       <ScrollableItem />
-      <div className=" h-fit  flex justify-center items-center  no-scrollbar">
-        <div className="w-3/4 h-fit grid grid-cols-4 gap-4 ">
+      <div className="flex justify-center items-center   no-scrollbar min-h-screen">
+        <div className="md:w-3/4 h-fit grid grid-cols-1   sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {items.map((i) => (
             <div
               key={i._id}
-              className="h-fit w-42 border border-purple-500 rounded-xl"
+              className="h-fit w-64 md:w-52  border border-purple-500 rounded-xl"
             >
               <img
                 src={i.ImageLink}
                 alt={i.ItemName}
-                className="rounded-t-xl h-32"
+                className="rounded-t-xl h-32 w-full"
               />
               <div className="py-1 px-2">
                 <h1 className="font-bold text-highlight">{i.ItemName}</h1>

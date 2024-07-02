@@ -47,9 +47,9 @@ export default function ScrollableItem() {
   };
   return (
     <>
-      <div className="h-64 my-8 flex justify-around items-center  flex-col">
-        <div className="h-4 w-3/4 flex justify-between items-center">
-          <p className="w-3/4 font-bold text-xl text-left mx-6">
+      <div className=" h-48 md:h-64 my-8 flex justify-around items-center  flex-col">
+        <div className="h-5  w-3/4 flex justify-between items-center">
+          <p className="w-3/4 font-bold text-xl text-left mx-6 text-nowrap">
             Have a Look 😋 <span className="text-highlight">?</span>
           </p>
           <div className="flex justify-center items-center w-1/4">
@@ -63,12 +63,12 @@ export default function ScrollableItem() {
         </div>
         <div
           ref={scrollableDivRef}
-          className="h-52 w-3/4 flex justify-between items-center overflow-x-scroll no-scrollbar"
+          className=" h-44 md:h-52 w-3/4 flex justify-between  items-center overflow-x-scroll no-scrollbar"
         >
-          <div className="w-fit flex justify-center items-center">
+          <div className="flex justify-between items-center">
             {mainItems.map((item, index) => (
               <div
-                className="h-48 w-48 border border-black mx-6 flex justify-center items-center rounded-lg flex-col"
+                className=" h-40 w-36 md:h-48 md:w-48 border border-black mx-6 flex justify-between items-center rounded-lg flex-col"
                 onClick={() => {
                   searchItem(index);
                 }}
@@ -76,9 +76,9 @@ export default function ScrollableItem() {
                 <img
                   src={item.itemImage}
                   alt={item.ItemName}
-                  className="h-32"
+                  className=" h-32 md:h-40 w-full rounded-t-lg"
                 />
-                <h1>{item.ItemName}</h1>
+                <h1 className="">{item.ItemName}</h1>
               </div>
             ))}
           </div>

@@ -17,7 +17,7 @@ const Profile = () => {
       }
 
       try {
-        const response = await fetch("http://localhost:8000/user/profile", {
+        const response = await fetch("http://192.168.2.182:8000/user/profile", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -71,7 +71,7 @@ const Profile = () => {
       };
       try {
         const response = await fetch(
-          "http://localhost:8000/user/updateProfile",
+          "http://192.168.2.182:8000/user/updateProfile",
           {
             method: "post",
             headers: {
@@ -101,7 +101,7 @@ const Profile = () => {
   const deleteAccount = async () => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch("http://localhost:8000/user/deleteAccount", {
+      const response = await fetch("http://192.168.2.182:8000/user/deleteAccount", {
         method: "post",
         headers: {
           "Content-Type": "application/json",

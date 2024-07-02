@@ -17,7 +17,7 @@ export default function Login() {
       if (userOtp == actualOtp) {
         const uData = { userEmail };
         try {
-          const res = await fetch("http://localhost:8000/login", {
+          const res = await fetch("http://192.168.2.182:8000/login", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -46,7 +46,7 @@ export default function Login() {
       const Email = { userEmail };
       const sendmail = async (email) => {
         try {
-          const emailRes = await fetch("http://localhost:8000/sendEmail", {
+          const emailRes = await fetch("http://192.168.2.182:8000/sendEmail", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

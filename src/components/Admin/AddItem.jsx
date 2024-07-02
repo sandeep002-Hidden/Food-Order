@@ -10,14 +10,18 @@ export default function AddItem() {
   const [message, setMessage] = useState();
   const addItem = async () => {
     const TypeOfDish1=TypeOfDish.split(",")
-    const itemData = { ItemName,ItemPrice, ItemDescription, ImageLink,TypeOfDish1 };
+    const TypeOfDish2=[]
+    TypeOfDish1.map((item) => {
+      TypeOfDish2.add(item.toLowerCase());
+    });    
+    const itemData = { ItemName:ItemName.toLowerCase(),ItemPrice, ItemDescription, ImageLink,TypeOfDish2 };
     setItemName("");
     setItemDescription("");
     setImageLink("");
     setItemPrice("")
     setTypeOfDish("")
     try {
-      const res = await fetch("http://localhost:8000/admin/addItems", {
+      const res = await fetch("http://192.168.2.182:8000/admin/addItems", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

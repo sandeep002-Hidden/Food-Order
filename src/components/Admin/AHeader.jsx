@@ -18,7 +18,7 @@ export default function AdminHeader(){
           return;
         }
 
-        const response = await fetch("http://localhost:8000/verify", {
+        const response = await fetch("http://192.168.2.182:8000/verify", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -47,12 +47,7 @@ export default function AdminHeader(){
           <img src={logo1} alt="Logo" className="h-12 rounded-lg" />
           <p className=" mx-4 text-2xl font-black font-serif" onClick={refer}>Order Now<span className="text-highlight text-3xl">.</span> </p>
         </div>
-        <button>
-          <a href="/admin002/search">🔍 Search </a>
-        </button>
-        <button>
-          <a href="/admin002/help"> 🙏🏼 Help</a>
-        </button>
+        
         <button>
           <a href={verificationResult ? "/admin002/Profile" : "/login"}>
             {verificationResult ? "Profile👤" : "Login🔐"}

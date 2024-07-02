@@ -67,6 +67,6 @@ app.get("/verify", async (req, res) => {
   }
 });
 
-app.listen(8000, () => {
+app.listen(8000,"192.168.2.182", () => {
   console.log("Server is running 8000 ");
 });
