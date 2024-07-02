@@ -1,27 +1,28 @@
 import mongoose from "mongoose";
-const AdminSchema=new mongoose.Schema({
-    AdminName:{
+const SellerSchema=new mongoose.Schema({
+    SellerName:{
         type:String,
         required:true,
     },
-    AdminEmail:{
+    SellerEmail:{
         type:String,
         unique:true,
         required:true
     },
 
-    AdminPassword:{
+    SellerPassword:{
         type:String,
         required:true,
     },
-    phoneNo:{
+    PhoneNo:{
         type:String,
         required:true,
         unique:true
     },
-    country:{
+    Country:{
         type:String,
-        required:true
+        required:true,
+        default:"India",
     },
     State:{
         type:String,
@@ -31,19 +32,26 @@ const AdminSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    Pin:{
+    pin:{
         type:String,
         required:true
     },
     Location:{
         type:String,
     },
-    OrderHistory:{
+    DeliveryHistory:{
         type:Array,
     },
+    PendingDeliveries:{
+        type:Array,
+    },
+    isAdmin:{
+        type:Boolean,
+        default:true
+    }
     
 },{timestamps:true})
 
 
-const Admin=mongoose.model("admin",AdminSchema);
-export default Admin;
+const Seller=mongoose.model("seller",SellerSchema);
+export default Seller;

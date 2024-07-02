@@ -15,7 +15,6 @@ export default function Header() {
         if (!token) {
           return;
         }
-
         const response = await fetch("http://localhost:8000/verify", {
           method: "GET",
           headers: {

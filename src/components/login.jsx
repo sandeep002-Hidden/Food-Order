@@ -12,11 +12,10 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (flag) {
-      setEmail("");
-      setUserOtp("");
+      console.log(actualOtp)
+      console.log(userOtp)
       if (userOtp == actualOtp) {
         const uData = { userEmail };
-
         try {
           const res = await fetch("http://localhost:8000/login", {
             method: "POST",
@@ -26,6 +25,7 @@ export default function Login() {
             body: JSON.stringify(uData),
           });
           const data = await res.json();
+          console.log(data)
           localStorage.setItem("token", data.token);
           if (data.isAdmin === true) {
             navigate("/admin002");
@@ -38,9 +38,8 @@ export default function Login() {
         } catch (error) {
           setMessage("Error occur while verifying Your Information");
         }
-      }
-      else{
-        setMessage("Wrong Otp")
+      } else {
+        setMessage("Wrong Otp");
       }
     } else {
       setFlag(true);

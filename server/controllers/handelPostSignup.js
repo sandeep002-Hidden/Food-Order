@@ -39,16 +39,21 @@ export default async function handelPostSignup(req, res) {
       Pin,
       Location,
     });
-
+    userData.isAdmin = false;
     const salt = await bcrypt.genSalt(10);
     userData.userPassword = await bcrypt.hash(userPassword, salt);
     await userData.save();
 
     const payload = { userData: { id: userData.id } };
-    jwt.sign(payload, process.env.JWTSECRETE, { expiresIn: 360000 }, (err, token) => {
-      if (err) throw err;
-      return res.json({ token }).redirect("/login");
-    });
+    jwt.sign(
+      payload,
+      process.env.JWTSECRETE,
+      { expiresIn: 360000 },
+      (err, token) => {
+        if (err) throw err;
+        return res.json({ token }).redirect("/login");
+      }
+    );
   } catch (error) {
     res.status(500).send("Server error");
   }

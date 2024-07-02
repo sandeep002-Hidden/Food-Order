@@ -156,6 +156,9 @@ const Profile = () => {
                 ))}
               </div>
             </div>
+            <div className="border-double border-2 border-highlight rounded-2xl my-1">
+              <h1 className="w-full mx-8 font-black text-lg ">My Orders</h1>
+            </div>
           </div>
           <div className="w-3/4 h-fit border-double border-2 border-highlight rounded-2xl px-6 py-2">
             <div className="w-full h-min flex  justify-around  items-center">

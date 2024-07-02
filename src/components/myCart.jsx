@@ -6,6 +6,7 @@ export default function MyCart() {
   const [message, setMessage] = useState("");
   const [goodMessage, setGoodMessage] = useState("");
   const [quantity, setQuantity] = useState(Array(20).fill(1));
+  const token = localStorage.getItem("token");
 
   const decreaseAmount = (index) => {
     setQuantity((prevQuantity) => {
@@ -25,32 +26,33 @@ export default function MyCart() {
 
   useEffect(() => {
     const getCartItems = async () => {
-      const token = localStorage.getItem("token");
+      
       if (!token) {
         setMessage("Login to continue");
       }
-      const items = await fetch("http://localhost:8000/user/getCartItems", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "x-item-token002": token,
-        },
-      });
-      const data = await items.json();
-      if(data.length===0){
-        setGoodMessage("Empty Cart")
+      try {
+        const items = await fetch("http://localhost:8000/user/getCartItems", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "x-item-token002": token,
+          },
+        });
+        const data = await items.json();
+        if (data.length === 0) {
+          setGoodMessage("Empty Cart");
+        }
+        setMyCart(data);
+      } catch (error) {
+        console.log(error);
       }
-      setMyCart(data);
 
       return;
     };
     getCartItems();
   }, []);
   const removeItem = async (index) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      setMessage("Login to continue");
-    }
+    
     const removeItem = myCart[index];
     const body = { token, removeItem };
     const removeRes = await fetch(
@@ -68,16 +70,20 @@ export default function MyCart() {
     } else {
       setMessage("Item Removed From Your Cart");
       setTimeout(() => {
-        setMessage("")
-        setGoodMessage("Reload to see Removed 😗")
+        setMessage("");
+        setGoodMessage("Reload to see Removed 😗");
       }, 2000);
     }
   };
   return (
     <>
       <Header />
+      {token &&
+      <div>
       <h1 className="text-center text-red-500 text-2xl font-bold">{message}</h1>
-      <h1 className="text-center text-green-500 text-2xl font-bold">{goodMessage}</h1>
+      <h1 className="text-center text-green-500 text-2xl font-bold">
+        {goodMessage}
+      </h1>
 
       <div className="h-fit overflow-y-hidden flex justify-center items-center flex-col">
         {myCart.map((item, index) => (
@@ -124,6 +130,13 @@ export default function MyCart() {
         ))}
       </div>
       <div>Check Out Now</div>
+      </div>
+      }
+      {!token &&
+      <div>
+        <h1 className="text-center m-4 font-semibold text-red-600 text-xl">Login to see the Cart</h1>
+      </div>
+}
     </>
   );
 }

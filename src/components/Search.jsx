@@ -12,8 +12,8 @@ import chole from "../images/chole.jpg";
 import momo from "../images/momo.png";
 import mutton from "../images/mutton.png";
 import paneer from "../images/paneer.png";
-import AddToCart from "./addToCartButton";
-
+import AddToCart from "./Buttons/addToCartButton";
+import BuyNowBtn from "./Buttons/buyNow";
 
 
 export default function Search() {
@@ -157,18 +157,14 @@ export default function Search() {
                 />
               </div>
               <div className="h-32 flex justify-around items-start flex-col">
+                <p className=" text-highlight font-bold text-xl">{item.ItemName}</p>
                 <p className="text-xl font-bold">{item.ItemPrice}</p>
                 <p className=" text-yellow-600 text-lg font-semibold">⭐4.5/5</p>
                 <p className="text-sm">{item.ItemDescription}</p>
               </div>
               <div className="h-32 flex justify-around items-center flex-col">
                 <AddToCart id={item._id}/>
-                {/* <button className="border-2 border-purple-500 rounded-lg p-2">
-                  Add to cart
-                </button> */}
-                <button className="border-2 border-purple-500 rounded-lg p-2">
-                  BuyNow
-                </button>
+                <BuyNowBtn id={item._id}/>
               </div>
             </div>
           ))}

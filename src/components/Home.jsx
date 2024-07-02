@@ -3,6 +3,8 @@ import Header from "./Header";
 import Footer from "./Footer";
 import ScrollableItem from "./ScrollableItem";
 import AddToCart from "./Buttons/addToCartButton";
+import BuyNowBtn from "./Buttons/buyNow";
+
 export default function Home() {
   const [items, setItems] = useState([]);
 
@@ -31,12 +33,7 @@ export default function Home() {
     fetchItems();
   }, []);
 
-  const buyNow = async (id) => {
-    if (localStorage.getItem("token")) {
-    } else {
-      alert("Login to Purchase to Your cart");
-    }
-  };
+  
 
   return (
     <>
@@ -63,12 +60,7 @@ export default function Home() {
                 </h1>
                 <div className="h-fit w-full flex justify-around items-center">
                   <AddToCart id={i._id} />
-                  <button
-                    className="w-fit h-10 rounded-md px-2 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 text-white font-bold border"
-                    onClick={() => buyNow(i._id)}
-                  >
-                    Buy Now
-                  </button>
+                  <BuyNowBtn id={i._id}/>
                 </div>
               </div>
             </div>

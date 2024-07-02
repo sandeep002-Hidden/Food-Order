@@ -1,5 +1,7 @@
 import User from "../models/user.model.js";
+import Seller from "../models/seller.model.js";
 import nodemailer from "nodemailer";
+
 export default async function sendEmail(req, res) {
   const max = 999999;
   const min = 100000;
@@ -34,12 +36,21 @@ export default async function sendEmail(req, res) {
   };
   const email = req.body.userEmail;
   try {
-    await User.find({ userEmail: email }).then((result) => {
+    await User.find({ userEmail: email }).then(async (result) => {
       if (result[0] === undefined) {
-        return res.json({message:"Provided Email is not a Authenticated User"})
+        await Seller.find({ SellerEmail: email }).then((result) => {
+          if (result[0] === undefined) {
+            return res.json({
+              message: "Provided Email is not a Authenticated User",
+            });
+          } else {
+            sendEmail(email);
+            return res.json({ Otp: otp });
+          }
+        });
       } else {
-      sendEmail(email);
-      return res.json({ Otp: otp });
+        sendEmail(email);
+        return res.json({ Otp: otp });
       }
     });
   } catch (error) {
