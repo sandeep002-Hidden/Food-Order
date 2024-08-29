@@ -18,7 +18,7 @@ export default function AdminHeader(){
           return;
         }
 
-        const response = await fetch("http://192.168.2.182:8000/verify", {
+        const response = await fetch(`http://localhost:8000/verify`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

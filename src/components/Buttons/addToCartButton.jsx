@@ -6,7 +6,7 @@ export default function AddToCart(id){
           const idObj={id:id,token:token}
           try {
             const addToCartRes = await fetch(
-              "http://192.168.2.182:8000/user/addToCart",
+              `http://localhost:8000/user/addToCart`,
               {
                 method: "POST",
                 headers: {

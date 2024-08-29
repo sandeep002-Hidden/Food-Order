@@ -68,6 +68,7 @@ export default function ScrollableItem() {
           <div className="flex justify-between items-center">
             {mainItems.map((item, index) => (
               <div
+              key={index}
                 className=" h-40 w-36 md:h-48 md:w-48 border border-black mx-6 flex justify-between items-center rounded-lg flex-col"
                 onClick={() => {
                   searchItem(index);

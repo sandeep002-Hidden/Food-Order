@@ -42,7 +42,7 @@ export default function Help() {
 
   const sendMail = async (email) => {
     try {
-      const emailRes = await fetch("http://192.168.2.182:8000/sendEmail", {
+      const emailRes = await fetch(`http://localhost:8000/sendEmail`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -73,7 +73,7 @@ export default function Help() {
   const makeSellerProfile = async () => {
     const token = localStorage.getItem("token");
     const profileRes = await fetch(
-      "http://192.168.2.182:8000/admin/makeAdmin",
+      `http://localhost:8000:8000/admin/makeAdmin`,
       {
         method: "POST",
         headers: {

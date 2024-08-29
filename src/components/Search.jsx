@@ -71,7 +71,7 @@ export default function Search() {
   const findItem = async (item) => {
     const Item = { Item: item.toLowerCase() };
     try {
-      const resultIem = await fetch("http://192.168.2.182:8000/user/findItem", {
+      const resultIem = await fetch(`http://localhost:8000/user/findItem`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -125,6 +125,7 @@ export default function Search() {
           <div className="w-fit flex justify-center items-center">
             {mainItems.map((item, index) => (
               <div
+                key={index}
                 className="h-36 w-40 border border-black text-sm mx-6 flex justify-center items-center rounded-lg flex-col"
                 onClick={() => {
                   searchItem(index);
@@ -145,7 +146,8 @@ export default function Search() {
       <div className="flex justify-center min-h-50vh items-start">
         <div className="w-11/12 md:w-3/4 h-full">
           {itemResult.map((item, index) => (
-            <div className="flex m-2 justify-around items-center h-36  rounded-xl border border-highlight">
+            <div
+              key={item._id} className="flex m-2 justify-around items-center h-36  rounded-xl border border-highlight">
               <div className="flex justify-center items-center ">
                 <div>
                   <img

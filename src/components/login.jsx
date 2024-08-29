@@ -15,13 +15,14 @@ export default function Login() {
       console.log(actualOtp)
       console.log(userOtp)
       if (userOtp == actualOtp) {
-        const uData = { userEmail };
+        const uData = { userEmail }
         try {
-          const res = await fetch("http://192.168.2.182:8000/login", {
+          const res = await fetch(`http://localhost:8000/login`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
+            credentials: 'include',
             body: JSON.stringify(uData),
           });
           const data = await res.json();
@@ -36,6 +37,7 @@ export default function Login() {
             setMessage("Wrong userName or Password try again");
           }
         } catch (error) {
+          console.log(error.message)
           setMessage("Error occur while verifying Your Information");
         }
       } else {
@@ -46,7 +48,7 @@ export default function Login() {
       const Email = { userEmail };
       const sendmail = async (email) => {
         try {
-          const emailRes = await fetch("http://192.168.2.182:8000/sendEmail", {
+          const emailRes = await fetch(`http://localhost:8000/sendEmail`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

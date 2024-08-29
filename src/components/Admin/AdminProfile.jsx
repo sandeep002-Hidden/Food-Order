@@ -102,7 +102,7 @@ const Profile = () => {
   const deleteAccount = async () => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch("http://192.168.2.182:8000/admin/deleteAccount", {
+      const response = await fetch(`http://localhost:8000/admin/deleteAccount`, {
         method: "post",
         headers: {
           "Content-Type": "application/json",

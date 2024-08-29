@@ -14,25 +14,25 @@ export default function Header() {
         if (!token) {
           return;
         }
-        const response = await fetch("http://192.168.2.182:8000/verify", {
+        const response = await fetch(`http://localhost:8000/verify`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "x-auth-token": token,
           },
+          credentials:"include"
         });
-        if (!response.ok) {
-          setMessage("Error while verifying user, Login to continue");
+        
+        const data = await response.json();
+        if (!data.success) {
           return;
         }
-        const data = await response.json();
-        if (data.isAdmin === true) {
+          setVerificationResult(true);
+        if (data.role === "seller") {
           return navigate("/admin002");
         }
-        setVerificationResult(true);
       } catch (error) {
         setMessage("User verification failed:", error);
-        setVerificationResult({ error: error.message });
+        setVerificationResult({ error: error.success });
       }
     };
 
