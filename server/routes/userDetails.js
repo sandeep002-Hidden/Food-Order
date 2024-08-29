@@ -7,7 +7,7 @@ import addToCart from "../controllers/addToCart.js";
 import cartItems from "../controllers/cartItems.js";
 import removeItemFromCart from "../controllers/removeItemFromCart.js";
 import findItem from "../controllers/findItem.js";
-
+import logout from "../controllers/logout.js"
 
 
 const userRouter = express.Router();
@@ -20,5 +20,5 @@ userRouter.route("/addToCart").post(addToCart);
 userRouter.route("/getCartItems").get(cartItems);
 userRouter.route("/removeItemFromCart").delete(removeItemFromCart);
 userRouter.route("/findItem").post(findItem);
-
+userRouter.route("/logout").get(logout)
 export default userRouter;

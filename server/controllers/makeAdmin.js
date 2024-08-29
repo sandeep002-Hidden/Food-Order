@@ -28,7 +28,6 @@ export default async function makeAdmin(req, res) {
     Location,
   });
   const decodedToken = jwt.verify(token, process.env.JWTSECRETE);
-  console.log(decodedToken)
   const salt = await bcrypt.genSalt(10);
   sellerData.isAdmin=true
   sellerData.SellerPassword = await bcrypt.hash(SellerPassword, salt);

@@ -2,7 +2,6 @@ import Item from "../models/items.model.js";
 
 export default async function findItem(req, res) {
   const item = req.body.Item;
-  console.log(req.body)
   try {
     const items = await Item.find({
         $or: [
