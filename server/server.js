@@ -42,7 +42,7 @@ app.get("/", (req, res) => {
 app.get("/verify", async (req, res) => {
   const token =req.cookies.orderNow;
   if (!token) {
-    return res.status(401).json({ msg: "No token, access denied" });
+    return res.status(401).json({ message: "Login to continue" });
   }
   try {
     const decoded = jwt.verify(token, process.env.JWTSECRETE);

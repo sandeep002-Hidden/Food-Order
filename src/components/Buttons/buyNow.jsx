@@ -1,9 +1,27 @@
+import React,{useState} from "react";
+
 export default function BuyNowBtn(id) {
+  const [message,setMessage]=useState("")
   const buyNow = async (id) => {
-    if (localStorage.getItem("token")) {
-      console.log(id.id);
-    } else {
-      alert("Login to Purchase to Your cart");
+    try {
+      await fetch(
+        `http://localhost:8000/user/addToCart`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials:"include",
+          body:JSON.stringify(id)
+        }
+      ).then(async(res)=>{
+        const data=await res.json()
+        if(!data.success){
+          setMessage(data.message)
+        }
+      })
+    } catch (error) {
+      setMessage(error.message)
     }
   };
   return (

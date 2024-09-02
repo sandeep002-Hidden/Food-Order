@@ -1,13 +1,14 @@
 import jwt from "jsonwebtoken";
 import Seller from "../models/seller.model.js"
 export default async function updateAdminProfile(req,res){
-    const { userName, userEmail, phoneNo, token } = req.body;
+    const SellerName=req.body.SellerName
+    const token =req.cookies.orderNow;
     try {
       const decodedToken = jwt.verify(token, process.env.JWTSECRETE);
       try {
         await Seller.updateMany(
-          { _id: decodedToken.user },
-          { $set: { SellerName: userName, SellerEmail: userEmail, PhoneNo: phoneNo } }
+          { _id: decodedToken.userId },
+          { $set: { SellerName} }
         ).then((result) => {
           if (result.acknowledged === true) {
             return res.json({ message: "Updated Success fully" });

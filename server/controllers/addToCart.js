@@ -2,15 +2,14 @@ import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 
 export default async function addToCart(req, res) {
-    const itemId = req.body.id.id
-    const token = req.body.token;
+    const token =req.cookies.orderNow;
     const decodedToken = jwt.verify(token, process.env.JWTSECRETE);
     await User.updateOne(
-      { _id: decodedToken.user },
-      { $push: { Cart: itemId } }
+      { _id: decodedToken.userId },
+      { $push: { Cart: req.body.id } }
     ).then(()=>{
-        return res.json({ message: "Items Added to the Cart" });
+        return res.json({ message: "Items Added to the Cart",success:true });
     }).catch((error)=>{
-        return res.json({ message: "Failed to add Items to cart" });
+        return res.json({ message: error.message,success:false });
     })
 }

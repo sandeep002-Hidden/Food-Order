@@ -12,7 +12,7 @@ export default function AddItem() {
     const TypeOfDish1=TypeOfDish.split(",")
     const TypeOfDish2=[]
     TypeOfDish1.map((item) => {
-      TypeOfDish2.add(item.toLowerCase());
+      TypeOfDish2.push(item.toLowerCase());
     });    
     const itemData = { ItemName:ItemName.toLowerCase(),ItemPrice, ItemDescription, ImageLink,TypeOfDish2 };
     setItemName("");
@@ -26,6 +26,7 @@ export default function AddItem() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials:"include",
         body: JSON.stringify(itemData),
       });
       setMessage("Added item success fully")

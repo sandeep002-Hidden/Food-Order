@@ -1,23 +1,16 @@
 import mongoose from "mongoose";
-const SellerSchema=new mongoose.Schema({
-    SellerName:{
+const OrderSchema=new mongoose.Schema({
+    clientName:{
         type:String,
         required:true,
     },
-    SellerEmail:{
-        type:String,
-        unique:true,
+    clientEmail: {
+        type: String,
         required:true
     },
-
-    SellerPassword:{
+    clientPhoneNo:{
         type:String,
         required:true,
-    },
-    phoneNo:{
-        type:String,
-        required:true,
-        unique:true
     },
     Country:{
         type:String,
@@ -39,19 +32,19 @@ const SellerSchema=new mongoose.Schema({
     Location:{
         type:String,
     },
-    DeliveryHistory:{
+    Items:{
         type:Array,
     },
-    PendingDeliveries:{
-        type:Array,
+    TotalPrice:{
+        type:Number,
     },
-    isAdmin:{
+    isDelivered:{
         type:Boolean,
-        default:true
+        default:false
+    },
+    OrderTime:{
+        type:String
     }
-    
 },{timestamps:true})
-
-
-const Seller=mongoose.model("seller",SellerSchema);
-export default Seller;
+const Order=mongoose.model("order",OrderSchema);
+export default Order;

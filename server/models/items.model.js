@@ -5,6 +5,9 @@ const ItemSchema=new mongoose.Schema({
         required:true,
         lowercase: true
     },
+    SellerId:{
+        type:String,
+    },
     ItemPrice:{
         type:Number,
         required:true,
@@ -22,7 +25,7 @@ const ItemSchema=new mongoose.Schema({
     NumberOfOrder:{
         type:Number,
         default:0
-    }
+    },
 },{timestamps:true})
 
 const Item=mongoose.model("item",ItemSchema);

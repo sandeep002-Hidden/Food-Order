@@ -56,6 +56,9 @@ export default function AdminHeader(){
         <button>
           <a href="/admin002/addItems">😋 Add an Item</a>
         </button>
+        <button>
+          <a href="/admin002/pendingOrders">Pending Orders🛒</a>
+        </button>
       </div>
       <h1>{message}</h1>
     </>

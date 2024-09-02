@@ -27,7 +27,6 @@ export default function Login() {
           });
           const data = await res.json();
           console.log(data)
-          localStorage.setItem("token", data.token);
           if (data.isAdmin === true) {
             navigate("/admin002");
           }

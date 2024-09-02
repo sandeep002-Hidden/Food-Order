@@ -3,16 +3,14 @@ import jwt from "jsonwebtoken"
 
 export default async function removeItemFromCart(req,res){
     try {
-        
-    
-    const token=req.body.token
-    const removedItem=req.body.removeItem._id
-    const userId = jwt.verify(token, process.env.JWTSECRETE).user;
-    (await User.updateOne({_id:userId},{$pull:{Cart:removedItem}})).matchedCount(()=>{
-        return res.json({message:"Removed Item Successfully"})
+    const token =req.cookies.orderNow;
+    const removedItem=req.body._id
+    const userId = jwt.verify(token, process.env.JWTSECRETE).userId
+    await (await User.updateOne({_id:userId},{$pull:{Cart:removedItem}})).then(()=>{
+        return res.json({message:"Removed Item Successfully",success:true})
     });
 } catch (error) {
-    return res.json({message:"Error occur while Removing Item From your Cart"})
+    return res.json({message:"Error occur while Removing Item From your Cart",success:false})
         
 }
 }

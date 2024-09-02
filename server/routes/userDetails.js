@@ -8,6 +8,9 @@ import cartItems from "../controllers/cartItems.js";
 import removeItemFromCart from "../controllers/removeItemFromCart.js";
 import findItem from "../controllers/findItem.js";
 import logout from "../controllers/logout.js"
+import buyCartItems from "../controllers/buyCartItems.js"
+import getOrderHisory from "../controllers/getOrderHisory.js"
+import pendingOrderHistory from "../controllers/pendingOrderHistory.js"
 
 
 const userRouter = express.Router();
@@ -21,4 +24,8 @@ userRouter.route("/getCartItems").get(cartItems);
 userRouter.route("/removeItemFromCart").delete(removeItemFromCart);
 userRouter.route("/findItem").post(findItem);
 userRouter.route("/logout").get(logout)
+userRouter.route("/buyCartItem").post(buyCartItems)
+userRouter.route("/getOrderHisory").get(getOrderHisory)
+userRouter.route("/pendingOrderHistory").get(pendingOrderHistory)
+
 export default userRouter;

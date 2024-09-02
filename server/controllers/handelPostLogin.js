@@ -21,15 +21,12 @@ export default async function handlePostLogin(req, res) {
           userId: seller._id,
           isAdmin: seller.isAdmin,
         };
-
         const cookie = jwt.sign(payload, process.env.JWTSECRETE, { expiresIn: "1d" });
-
         return res.cookie("orderNow", cookie, {
           maxAge: 24 * 60 * 60 * 1000,
           httpOnly: true,
-          sameSite: 'None',
         }).json({
-          message: "Login successful",
+          message: "Login successfull",
           success: true,
         });
       }
@@ -41,6 +38,7 @@ export default async function handlePostLogin(req, res) {
 
       const cookie = jwt.sign(payload, process.env.JWTSECRETE, { expiresIn: "1d" });
       return res.cookie("orderNow", cookie, {
+        maxAge: 24 * 60 * 60 * 1000,
         httpOnly: true,
       }).json({
         message: "Login successful",
@@ -48,7 +46,7 @@ export default async function handlePostLogin(req, res) {
       });
     }
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     return res
       .status(500)
       .json({ message: "Server error. Please try again later.", success: false });

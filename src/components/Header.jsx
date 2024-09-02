@@ -10,10 +10,7 @@ export default function Header() {
   useEffect(() => {
     const verifyToken = async () => {
       try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          return;
-        }
+        
         const response = await fetch(`http://localhost:8000/verify`, {
           method: "GET",
           headers: {

@@ -13,9 +13,6 @@ export default async function handelGetUserDetails(req, res) {
 
     }
     catch(error){
-        console.log("Error while fetching The information")
-        console.log(error)
-        return res.status(401).json({message:"Error while fetching The information",success:false})
-    }
+      return res.status(401).json({ message: error.message,sucess:flase });    }
   
 }

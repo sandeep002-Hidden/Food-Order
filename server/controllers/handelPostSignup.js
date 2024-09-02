@@ -15,6 +15,7 @@ export default async function handelPostSignup(req, res) {
       Pin,
       Location,
     } = req.body;
+    
     const distinctUserEmail = await User.distinct("userEmail");
     const distinctUserPhoneNo = await User.distinct("phoneNo");
     if (distinctUserEmail.includes(userEmail)) {
