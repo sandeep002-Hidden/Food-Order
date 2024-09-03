@@ -49,6 +49,9 @@ const UserSchema=new mongoose.Schema({
     },
     PendingOrders:{
         type:Array,
+    },
+    CancelledOrders:{
+        type:Array,
     }
     
 },{timestamps:true})

@@ -2,14 +2,18 @@ import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
 
 export default async function updateUserDetails(req, res) {
-  const { userName, userEmail, phoneNo, token } = req.body;
+
+  const token =req.cookies.orderNow;
+  const userName=req.body.userName
+
   try {
     const decodedToken = jwt.verify(token, process.env.JWTSECRETE);
     try {
-      await User.updateMany(
-        { _id: decodedToken.user },
-        { $set: { userName: userName, userEmail: userEmail, phoneNo: phoneNo } }
-      ).then((result) => {
+      await User.updateOne(
+        { _id: decodedToken.userId },
+        { $set: { userName: userName } }
+      )
+      .then((result) => {
         if (result.acknowledged === true) {
           return res.json({ message: "Updated Success fully" });
         }

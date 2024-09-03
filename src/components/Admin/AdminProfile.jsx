@@ -62,7 +62,7 @@ const Profile = () => {
               "Content-Type": "application/json",
             },
             credentials: "include",
-            body: JSON.stringify( newUser ),
+            body: JSON.stringify(newUser),
           }
         );
         if (response.ok) {
@@ -99,27 +99,36 @@ const Profile = () => {
     } catch (error) {
       setMessage(error.message);
     }
-    finally{
+    finally {
       setLoading(false)
     }
   };
   const handelLogOut = async () => {
-    await fetch(`http://localhost:8000/user/logout`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include"
-    }).then(async(res)=>{
-      const logoutRes=await res.json()
-      console.log(logoutRes)
-      if(!logoutRes.success){
-        setMessage(logoutRes.message)
-      }
-      else{
-        navigate("/");
-      }
-    })
+    try {
+      setLoading(true)
+      await fetch(`http://localhost:8000/user/logout`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include"
+      }).then(async (res) => {
+        const logoutRes = await res.json()
+        console.log(logoutRes)
+        if (!logoutRes.success) {
+          setMessage(logoutRes.message)
+        }
+        else {
+          navigate("/");
+        }
+      })
+    }
+    catch (error) {
+      console.log(error.message)
+    }
+    finally {
+      setLoading(false)
+    }
   };
   return (
     <>
@@ -127,83 +136,99 @@ const Profile = () => {
       {!loading && (
         <>
           <AdminHeader />
-          <h1 className="text-center my-2">{message}</h1>
-          <div className="flex justify-center items-center my-8 font-serif overflow-x-hidden">
-            <div className="w-4/5 md:h-screen flex justify-center items-start flex-col md:flex-row">
-              <div className="w-full md:w-1/4 h-full">
-                <div className="w-full h-fit border-double border-2 border-highlight rounded-2xl">
-                  <h1 className="py-1 px-4 text-black font-semibold text-lg ">
-                    👤 Hello
-                  </h1>
-                  <h1 className="px-12 font-black text-xl">
-                    {profileData.SellerName}
-                  </h1>
+          <div className="flex flex-col items-center bg-gray-100 p-4 min-h-screen">
+            <h1 className="text-3xl font-semibold text-center my-6">{message}</h1>
+            <div className="w-full max-w-6xl flex flex-col md:flex-row bg-white shadow-lg rounded-lg overflow-hidden">
+              <div className="md:w-1/4 p-6 border-r border-gray-200">
+                <div className="mb-6 border-double border-2 border-highlight rounded-2xl p-4">
+                  <h1 className="text-xl font-semibold text-black">👤 Hello</h1>
+                  <h2 className="text-2xl font-bold">{profileData.SellerName}</h2>
                 </div>
-                <div className="my-2 border-double border-2 border-highlight rounded-2xl">
-                  <h1 className="w-full mx-8 font-black text-lg">Location</h1>
-                  <div className="h-fit w-full px-12">
-                    <p className="my-2">Country - {profileData.Country}</p>
-                    <p className="my-2">State - {profileData.State}</p>
-                    <p className="my-2">District - {profileData.District}</p>
-                    <p className="my-2">Pin - {profileData.Pin}</p>
-                    <p className="my-2">Location - {profileData.Location}</p>
+
+                <div className="mb-6 border-double border-2 border-highlight rounded-2xl p-4">
+                  <h1 className="text-lg font-bold">Location</h1>
+                  <div className="space-y-2">
+                    <p>Country: {profileData.Country}</p>
+                    <p>State: {profileData.State}</p>
+                    <p>District: {profileData.District}</p>
+                    <p>Pin: {profileData.Pin}</p>
+                    <p>Location: {profileData.Location}</p>
                   </div>
                 </div>
-                <div className="border-double border-2 border-highlight rounded-2xl">
-                  <h1 className="w-full mx-8 font-black text-lg">Delivery History</h1>
+
+                <div className="border-double border-2 border-highlight rounded-2xl p-4">
+                  <h1 className="text-lg font-bold">Delivery History</h1>
+                  {/* Delivery History content here */}
                 </div>
               </div>
-              <div className="w-full md:w-3/4 h-fit border-double border-2 border-highlight rounded-2xl px-6 py-2">
-                <div className="w-full h-min flex justify-around items-center">
-                  <h1 className="inline">Personal Information</h1>
-                  <button id="editBtn" onClick={editProfile}>
+
+              <div className="md:w-3/4 p-6">
+                <div className="flex justify-between items-center mb-6">
+                  <h1 className="text-xl font-semibold">Personal Information</h1>
+                  <button
+                    id="editBtn"
+                    onClick={editProfile}
+                    className="border border-black rounded-lg px-4 py-2 text-white bg-purple-500 hover:bg-purple-600 transform transition-transform duration-200 active:scale-95 focus:outline-none focus:ring-2 focus:ring-purple-300"
+                  >
                     {edit ? "Save" : "Edit Profile"}
                   </button>
                 </div>
-                <div className="h-fit w-screen my-6">
-                  <h2 className="inline mx-12 text-lg font-medium ">Full Name</h2>
-                  <input
-                    type="text"
-                    className="profileDetails outline-none w-96 px-4 py-2 m-2 font-black text-black border border-black rounded-xl"
-                    placeholder={profileData.SellerName || "Enter Seller Name"}
-                    value={newUser.SellerName}
-                    onChange={(e) => setNewUser({ ...newUser, SellerName: e.target.value })}
-                    required
-                    readOnly={!edit}
-                  />
-                  <br />
-                  <h2 className="inline mx-12 text-lg font-medium ">Email address</h2>
-                  <input
-                    type="email"
-                    className="profileDetails outline-none w-96 px-4 py-2 m-2 font-black text-black border border-black rounded-xl"
-                    placeholder={profileData.SellerEmail || "Seller Email"}
-                    value={profileData.SellerEmail}
-                    readOnly
-                    required
-                  />
-                  <br />
-                  <h2 className="inline mx-12 text-lg font-medium ">Mobile No</h2>
-                  <input
-                    type="text"
-                    className="profileDetails outline-none w-96 px-4 py-2 m-2 font-black text-black border border-black rounded-xl"
-                    placeholder={profileData.phoneNo || "Seller PhoneNo"}
-                    value={profileData.phoneNo}
-                    readOnly
-                    required
-                  />
-                  <br />
+
+                <div className="space-y-4 mb-6">
+                  <div className="flex items-center">
+                    <h2 className="text-lg font-medium w-1/4">Full Name</h2>
+                    <input
+                      type="text"
+                      className="outline-none w-3/4 px-4 py-2 font-semibold border border-gray-300 rounded-md"
+                      placeholder={profileData.SellerName || "Enter Seller Name"}
+                      value={newUser.SellerName}
+                      onChange={(e) => setNewUser({ ...newUser, SellerName: e.target.value })}
+                      required
+                      readOnly={!edit}
+                    />
+                  </div>
+                  <div className="flex items-center">
+                    <h2 className="text-lg font-medium w-1/4">Email address</h2>
+                    <input
+                      type="email"
+                      className="outline-none w-3/4 px-4 py-2 font-semibold border border-gray-300 rounded-md"
+                      placeholder={profileData.SellerEmail || "Seller Email"}
+                      value={profileData.SellerEmail}
+                      readOnly
+                      required
+                    />
+                  </div>
+                  <div className="flex items-center">
+                    <h2 className="text-lg font-medium w-1/4">Mobile No</h2>
+                    <input
+                      type="text"
+                      className="outline-none w-3/4 px-4 py-2 font-semibold border border-gray-300 rounded-md"
+                      placeholder={profileData.phoneNo || "Seller PhoneNo"}
+                      value={profileData.phoneNo}
+                      readOnly
+                      required
+                    />
+                  </div>
                 </div>
-                <div id="btnSDiv" className="flex justify-between items-center w-full">
-                  <button  onClick={deleteAccount}>
-                    Delete account
+
+                <div className="flex justify-between space-x-4">
+                  <button
+                    onClick={deleteAccount}
+                    className="border border-black rounded-lg px-4 py-2 text-white bg-red-500 hover:bg-red-600 transform transition-transform duration-200 active:scale-95 focus:outline-none focus:ring-2 focus:ring-red-300"
+                  >
+                    Delete Account
                   </button>
-                  <button onClick={handelLogOut}>
+                  <button
+                    onClick={handelLogOut}
+                    className="border border-black rounded-lg px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 transform transition-transform duration-200 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  >
                     Log Out
                   </button>
                 </div>
               </div>
             </div>
           </div>
+
         </>
       )}
     </>

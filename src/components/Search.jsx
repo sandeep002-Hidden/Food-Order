@@ -126,7 +126,7 @@ export default function Search() {
             {mainItems.map((item, index) => (
               <div
                 key={index}
-                className="h-36 w-40 border border-black text-sm mx-6 flex justify-center items-center rounded-lg flex-col"
+                className="h-36 w-40 border border-black text-sm mx-6 flex justify-center items-center rounded-lg flex-col transition-transform transform hover:scale-105 hover:shadow-lg hover:border-purple-500"
                 onClick={() => {
                   searchItem(index);
                 }}

@@ -69,8 +69,8 @@ export default function ScrollableItem() {
             {mainItems.map((item, index) => (
               <div
               key={index}
-                className=" h-40 w-36 md:h-48 md:w-48 border border-black mx-6 flex justify-between items-center rounded-lg flex-col"
-                onClick={() => {
+              className="h-40 w-36 md:h-48 md:w-48 border border-black mx-6 flex justify-between items-center rounded-lg flex-col transition-transform transform hover:scale-105 hover:shadow-lg hover:border-purple-500"
+              onClick={() => {
                   searchItem(index);
                 }}
               >

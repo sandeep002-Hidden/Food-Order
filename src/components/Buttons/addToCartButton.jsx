@@ -20,12 +20,13 @@ export default function AddToCart(id){
       };
     return(
         <>
-        <button
-                    className="w-fit h-10 border-2 text-nowrap border-purple-500 rounded-lg p-2"
-                    onClick={() => addToCart(id)}
-                  >
-                    Add to Cart
-                  </button>
+       <button
+  className="w-fit h-10 border-2 text-nowrap border-purple-500 rounded-lg p-2 transform transition-transform duration-200 active:scale-95 focus:outline-none focus:ring-4 focus:ring-purple-300"
+  onClick={() => addToCart(id)}
+>
+  Add to Cart
+</button>
+
         </>
     )
 }

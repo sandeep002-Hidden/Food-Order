@@ -45,6 +45,9 @@ const SellerSchema=new mongoose.Schema({
     PendingDeliveries:{
         type:Array,
     },
+    CancelledDeliveries:{
+        type:Array,
+    },
     isAdmin:{
         type:Boolean,
         default:true

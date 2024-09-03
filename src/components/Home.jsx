@@ -32,39 +32,36 @@ export default function Home() {
 
     fetchItems();
   }, []);
-
-
-
   return (
     <>
       <Header />
       <ScrollableItem />
       <div className="flex justify-center items-center   no-scrollbar min-h-screen">
         <div className="md:w-3/4 h-fit grid grid-cols-1   sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {items.map((i,index) => (
-  <div
-    key={index}
-    className="h-fit w-64 md:w-52 border border-purple-500 rounded-xl"
-  >
-    <img
-      src={i.ImageLink}
-      alt={i.ItemName}
-      className="rounded-t-xl h-32 w-full"
-    />
-    <div className="py-1 px-2">
-      <h1 className="font-bold text-highlight">{i.ItemName}</h1>
-      <h1 className="font-bold">{i.ItemPrice} ₹</h1>
-      <h1 className="font-bold">⭐4.5/5.0</h1>
-      <h1 className="font-medium h-6 overflow-hidden">
-        {i.ItemDescription}
-      </h1>
-      <div className="h-fit w-full flex justify-around items-center">
-        <AddToCart id={i._id} />
-        <BuyNowBtn id={i._id} />
-      </div>
-    </div>
-  </div>
-))}
+          {items.map((item, index) => (
+            <div
+              key={index}
+              className="h-fit w-64 md:w-52 border border-purple-500 rounded-xl hover:shadow-lg hover:shadow-highlight transition-shadow duration-200"
+              >
+              <img
+                src={item.ImageLink}
+                alt={item.ItemName}
+                className="rounded-t-xl h-32 w-full"
+              />
+              <div className="py-1 px-2">
+                <h1 className="font-bold text-highlight">{item.ItemName}</h1>
+                <h1 className="font-bold">{item.ItemPrice} ₹</h1>
+                <h1 className="font-bold">⭐4.5/5.0</h1>
+                <h1 className="font-medium h-6 overflow-hidden">
+                  {item.ItemDescription}
+                </h1>
+                <div className="h-fit w-full flex justify-around items-center">
+                  <AddToCart id={item._id} />
+                  <BuyNowBtn id={item} />
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
       <Footer />

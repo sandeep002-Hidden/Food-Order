@@ -16,22 +16,23 @@ export default async function buyCartItems(req, res) {
 
         const pendingOrder = [];
         let totalPrice = 0;
-
         const now = new Date();
         const localTime = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
 
         const updateCartPromises = myCart.map(async (item, index) => {
             try {
+                //increasing the no of item ordered by quantiy
                 await Item.updateOne(
                     { _id: item._id },
                     { $inc: { NumberOfOrder: quantity[index] } }
                 );
-                totalPrice += item.ItemPrice * quantity[index];
+                totalPrice = totalPrice + (item.ItemPrice * quantity[index])
                 pendingOrder.push({
                     Item: item._id,
                     Quantity: quantity[index],
                     Time: localTime,
                 });
+                //pulling out of cart
                 await User.updateOne({ _id: userId }, { $pull: { Cart: item._id } });
                 await Seller.updateOne({ _id: item.SellerId }, { $push: { PendingDeliveries: { itemId: item._id, amount: quantity[index] } } })
             } catch (error) {
@@ -40,20 +41,6 @@ export default async function buyCartItems(req, res) {
             }
         });
         await Promise.all(updateCartPromises);
-        try {
-            await User.updateOne(
-                { _id: userId },
-                { $push: { PendingOrders: pendingOrder } }
-            );
-        } catch (error) {
-            console.error(`Failed to update user pending orders: ${error.message}`);
-            return res.status(500).json({ message: "Failed to process your order. Please try again.", success: false });
-        }
-        try {
-
-        } catch (error) {
-            return res.status(500).json({ message: error.message, success: false })
-        }
         try {
             const user = await User.findOne({ _id: userId });
 
@@ -72,14 +59,24 @@ export default async function buyCartItems(req, res) {
                 Location: user.Location,
                 Items: pendingOrder,
                 TotalPrice: totalPrice,
-                OrderTime:localTime
+                OrderTime: localTime
             });
-
             await OrderUser.save()
+            try {
+                await User.updateOne(
+                    { _id: userId },
+                    { $push: { PendingOrders: OrderUser._id } }
+                );
+            } catch (error) {
+                console.error(`Failed to update user pending orders: ${error.message}`);
+                return res.status(500).json({ message: "Failed to process your order. Please try again.", success: false });
+            }
         } catch (error) {
             console.error(`Failed to save order: ${error.message}`);
             return res.status(500).json({ message: "Failed to place your order. Please try again.", success: false });
         }
+        //to-do
+        // push the order
 
         return res.status(200).json({ message: "Order placed successfully", success: true });
     } catch (error) {

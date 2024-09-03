@@ -11,8 +11,8 @@ import logout from "../controllers/logout.js"
 import buyCartItems from "../controllers/buyCartItems.js"
 import getOrderHisory from "../controllers/getOrderHisory.js"
 import pendingOrderHistory from "../controllers/pendingOrderHistory.js"
-
-
+import getOrderItems from "../controllers/getOrderItems.js"
+import cancelOrder from "../controllers/cancelOrder.js"
 const userRouter = express.Router();
 
 userRouter.route("/profile").get(handelGetUserDetails);
@@ -27,5 +27,7 @@ userRouter.route("/logout").get(logout)
 userRouter.route("/buyCartItem").post(buyCartItems)
 userRouter.route("/getOrderHisory").get(getOrderHisory)
 userRouter.route("/pendingOrderHistory").get(pendingOrderHistory)
+userRouter.route("/getOrderItems").post(getOrderItems)
+userRouter.route("/cancelOrder").post(cancelOrder)
 
 export default userRouter;

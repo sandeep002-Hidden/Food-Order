@@ -13,7 +13,7 @@ import AdminPanel from "./components/Admin/AdminPanel.jsx";
 import AdminSearch from "./components/Admin/ASearch.jsx";
 import AddItem from "./components/Admin/AddItem.jsx";
 import AdminProfile from "./components/Admin/AdminProfile.jsx"
-
+import PendingOrders from "./components/pendingOrders.jsx"
 function App() {
   return (
     <BrowserRouter>
@@ -30,6 +30,8 @@ function App() {
         <Route path="help" element={<Help />} />
         <Route path="Profile" element={<Profile />} />
         <Route path="forgetPassword" element={<ForgetPassword/>}/>
+        <Route path="/Profile/pendingOrders/:id" element={<PendingOrders />} />
+
       </Routes>
     </BrowserRouter>
   );

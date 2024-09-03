@@ -23,24 +23,27 @@ export default function MyCart() {
       return newQuantity;
     });
   };
-const buyCartItems=async()=>{
-  try {
-    await fetch(
-      `http://localhost:8000/user/buyCartItem`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials:"include",
-        body:JSON.stringify({myCart,quantity})
-      }
-    );
-  } catch (error) {
-    setMessage(error.message)
+  useEffect(() => {
+    console.log(myCart)
+  }, [myCart])
+  const buyCartItems = async () => {
+    try {
+      await fetch(
+        `http://localhost:8000/user/buyCartItem`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ myCart, quantity })
+        }
+      );
+    } catch (error) {
+      setMessage(error.message)
+    }
+
   }
-  
-}
   useEffect(() => {
     const getCartItems = async () => {
 
@@ -166,21 +169,24 @@ const buyCartItems=async()=>{
                       </button>
                     </div>
                     <button
-                      onClick={() => {
-                        removeItem(index);
-                      }}
-                      className="border border-black rounded-lg p-1 text-nowrap"
-                    >
-                      Remove Item
-                    </button>
+  onClick={() => {
+    removeItem(index);
+  }}
+  className="border border-black rounded-lg p-1 text-nowrap transform transition-transform duration-200 active:scale-95 focus:outline-none focus:ring-2 focus:ring-black"
+>
+  Remove Item
+</button>
+
                   </div>
                 </div>
               ))}
               <button
-                className={`w-10/12 h-10 rounded-md px-2 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 text-white font-bold border ${myCart.length===0?"hidden":"opacity-100"}`}
+                className={`w-10/12 h-10 rounded-md px-2 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 text-white font-bold border transform transition-transform duration-200 active:scale-95 focus:outline-none focus:ring-6 focus:ring-purple-300 ${myCart.length === 0 ? "hidden" : "opacity-100"}`}
                 onClick={buyCartItems}
-              >Buy Now All
+              >
+                Buy Now All
               </button>
+
             </>
           )
           }

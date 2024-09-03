@@ -42,6 +42,14 @@ const OrderSchema=new mongoose.Schema({
         type:Boolean,
         default:false
     },
+    isCancelled:{
+        type:Boolean,
+        default:false
+    },
+    orderStatus:{
+        type:String,
+        default:"waitting for pickup"
+    },
     OrderTime:{
         type:String
     }

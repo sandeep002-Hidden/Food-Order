@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 import LoadingScreen from "./LoadingScreen";
+import Cancel from "./Buttons/cancel";
 const Profile = () => {
   const [message, setMessage] = useState(" ");
   const [edit, setEdit] = useState(false)
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [userHistory, setuserHistory] = useState([])
   const [profileData, setProfileData] = useState({
     userName: "",
     userEmail: "",
@@ -18,7 +20,9 @@ const Profile = () => {
     Location: "",
     OrderHistory: []
   });
-  const [userHistory, setuserHistory] = useState([])
+  const [newUser, setNewUser] = useState({
+    userName: ""
+  });
   useEffect(() => {
     const fetchProfile = async () => {
 
@@ -44,26 +48,15 @@ const Profile = () => {
 
     fetchProfile();
   }, []);
-
+  
   if (loading) {
     return <LoadingScreen />;
   }
   const editProfile = async () => {
     setEdit(!edit)
-    const profileDetails = document.getElementsByClassName("profileDetails");
-    for (let i = 0; i < profileDetails.length; i++) {
-      profileDetails[i].readOnly = true;
+    if(!edit){
+      return
     }
-    const userName = document.getElementById("newName").value;
-    const userEmail = document.getElementById("newEmail").value;
-    const phoneNo = document.getElementById("newMobileNo").value;
-    const token = localStorage.getItem("token");
-    const data = {
-      userName,
-      userEmail,
-      phoneNo,
-      token,
-    };
     try {
       const response = await fetch(
         "http://localhost:8000/user/updateProfile",
@@ -72,11 +65,13 @@ const Profile = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(data),
+          credentials:"include",
+          body: JSON.stringify(newUser),
         }
       );
       if (response.ok) {
         setMessage("Your Profile Updated Successfully");
+        navigate("/Profile")
       } else {
         setMessage(
           "Error occur while updating Profile Details. Please try again!"
@@ -107,7 +102,6 @@ const Profile = () => {
     })
   };
   const deleteAccount = async () => {
-    const token = localStorage.getItem("token");
     try {
       const response = await fetch("http://localhost:8000/user/deleteAccount", {
         method: "post",
@@ -117,7 +111,6 @@ const Profile = () => {
         credentials: "include"
       });
       if (response.ok) {
-        localStorage.removeItem("token");
         navigate("/");
       } else {
         setMessage(
@@ -144,15 +137,12 @@ const Profile = () => {
       );
       const data = await response.json()
       setuserHistory(data.userHistory)
-      console.log(data.userHistory)
     } catch (error) {
       setMessage(
         "Error occur while updating Profile Details. Please try again!"
       );
     }
   }
-
-  //remains
   const orderHistory = async () => {
     try {
       const response = await fetch(
@@ -165,137 +155,157 @@ const Profile = () => {
           credentials: "include"
         }
       );
+      if(!response.ok){
+        setMessage(response.message)
+      }
     } catch (error) {
       setMessage(
         "Error occur while updating Profile Details. Please try again!"
       );
     }
   }
+  const visitPendingOrders = async (id) => {
+    navigate(`/Profile/pendingOrders/${id}`)
+  }
+
   return (
     <>
       <Header />
-      <h1 className="text-center my-2">{message}</h1>
-      <div className="flex justify-center items-center my-8 font-serif overflow-x-hidden">
-        <div className="w-4/5  md:h-screen flex justify-around md:flex-row">
-          <div className="w-full md:w-1/4 h-full">
-            <div className="w-full h-fit border-double border-2 border-highlight rounded-2xl">
-              <h1 className="py-1 px-4 text-black font-semibold text-lg ">
-                👤 Hello
-              </h1>
-              <h1 className="px-12 font-black text-xl">
-                {profileData.userName}
-              </h1>
+      <div className="flex flex-col items-center my-8 font-serif overflow-x-hidden">
+          <h1>{message}</h1>
+        <div className="w-full max-w-6xl md:h-screen flex flex-col md:flex-row">
+
+          {/* Profile */}
+          <div className="w-full md:w-1/4 h-full p-4">
+            <div className="w-full h-fit border-double border-2 border-highlight rounded-2xl mb-4 p-4 bg-white shadow-lg">
+              <h1 className="text-black font-semibold text-lg">👤 Hello</h1>
+              <h2 className="text-xl font-black">{profileData.userName}</h2>
             </div>
-            <div className=" my-2 border-double border-2 border-highlight rounded-2xl">
-              <h1 className="w-full mx-8 font-black text-lg">Location</h1>
-              <div className="h-fit w-full  px-12">
-                <p className="my-2">Country-{profileData.Country}</p>
-                <p className="my-2">State-{profileData.State}</p>
-                <p className="my-2">District-{profileData.District}</p>
-                <p className="my-2">Pin-{profileData.Pin}</p>
-                <p className="my-2">Location-{profileData.Location}</p>
+            <div className="w-full mb-4 border-double border-2 border-highlight rounded-2xl p-4 bg-white shadow-lg">
+              <h1 className="font-black text-lg">Location</h1>
+              <div className="text-sm text-gray-700">
+                <p className="my-1">Country: {profileData.Country}</p>
+                <p className="my-1">State: {profileData.State}</p>
+                <p className="my-1">District: {profileData.District}</p>
+                <p className="my-1">Pin: {profileData.Pin}</p>
+                <p className="my-1">Location: {profileData.Location}</p>
               </div>
             </div>
-            <div className="border-double border-2 border-highlight rounded-2xl">
-              <button className="w-full font-black text-lg" onClick={orderHistory}>Order History</button>
-              <div>
-                {profileData.OrderHistory.map((item, index) => (
-                  <div key={index}>{item}</div>
-                ))}
-              </div>
-            </div>
-            <div className="border-double border-2 border-highlight rounded-2xl my-1">
-              <button className="w-full font-black text-lg" onClick={PendingOrder}>Pending Orders</button>
+            <div className="border-double border-2 border-highlight rounded-2xl p-4 mb-4 bg-white shadow-lg">
+              <button
+                className="w-full bg-purple-500 text-white font-black text-lg py-2 rounded-lg hover:bg-purple-600 transition duration-200"
+                onClick={orderHistory}
+              >
+                Order History
+              </button>
+              <button
+                className="w-full bg-purple-500 text-white font-black text-lg py-2 rounded-lg hover:bg-purple-600 transition duration-200 mt-4"
+                onClick={PendingOrder}
+              >
+                Pending Orders
+              </button>
             </div>
           </div>
-          <div className="w-full">
-            <div className="w-full md:w-3/4 h-fit border-double border-2 border-highlight rounded-2xl px-6 py-2">
-              <div className="w-full h-min flex  justify-around  items-center">
-                <h1 className="inline">Personal Information</h1>
-                <button onClick={editProfile} className="border border-black rounded-lg p-1">
-                  {edit ? "Save" : "Edit profile"}
-                </button>
-              </div>
-              <div className="h-fit w-screen my-6 ">
-                <h2 className="inline mx-12 text-lg font-medium ">Full Name</h2>
+          <div className="w-full md:w-3/4 flex justify-start items-start flex-col">
+          {/* Personal Info */}
+          <div className="w-full h-fit border-double border-2 border-highlight rounded-2xl p-6 bg-white shadow-lg">
+            <div className="flex justify-between items-center mb-6">
+              <h1 className="text-xl font-semibold">Personal Information</h1>
+              <button
+                onClick={editProfile}
+                className="border border-black rounded-lg p-2 text-nowrap transform transition-transform duration-200 active:scale-95 focus:outline-none focus:ring-2 focus:ring-black"
+              >
+                {edit ? "Save" : "Edit Profile"}
+              </button>
+            </div>
+            <div className="space-y-4">
+              <div>
+                <h2 className="text-lg font-medium">Full Name</h2>
                 <input
-                  type="text"
-                  className="outline-none md:w-96 px-4 py-2 m-2 font-black text-black border border-black rounded-xl"
-                  value={profileData.userName}
-                  readOnly={!edit}
-                  required
-                />
-                <br />
-                <h2 className="inline mx-12 text-lg font-medium ">
-                  Email address
-                </h2>
+                      type="text"
+                      className="outline-none w-3/4 px-4 py-2 font-semibold border border-gray-300 rounded-md"
+                      placeholder={profileData.userName || "Enter Seller Name"}
+                      value={newUser.userName ||profileData.userName}
+                      onChange={(e) => setNewUser({ ...newUser, userName: e.target.value })}
+                      required
+                      readOnly={!edit}
+                    />
+              </div>
+              <div>
+                <h2 className="text-lg font-medium">Email Address</h2>
                 <input
                   type="email"
-                  className=" outline-none md:w-96 px-4 py-2 m-2 font-black text-black border border-black  rounded-xl"
+                  className="outline-none md:w-96 px-4 py-2 font-black text-black border border-black rounded-xl"
                   value={profileData.userEmail}
                   readOnly
                   required
                 />
-                <br />
-                <h2 className="inline mx-12 text-lg font-medium ">Mobile No</h2>
+              </div>
+              <div>
+                <h2 className="text-lg font-medium">Mobile No</h2>
                 <input
-                  type="number"
-                  className=" outline-none md:w-96 px-4 py-2 m-2 font-black text-black border border-black  rounded-xl"
+                  type="text"
+                  className="outline-none md:w-96 px-4 py-2 font-black text-black border border-black rounded-xl"
                   value={profileData.phoneNo}
                   readOnly
                   required
                 />
-                <br />
               </div>
-              <div
-                id="btnSDiv"
-                className="flex justify-between items-center w-full"
-              >
-                <button id="deleteBtn" onClick={deleteAccount} className="border border-black rounded-lg p-1">
-                  Delete account
+              <div className="flex justify-between mt-6">
+                <button
+                  onClick={deleteAccount}
+                  className="bg-red-500 text-white font-bold py-2 px-4 rounded-lg transform transition-transform duration-200 active:scale-95 focus:outline-none focus:ring-4 focus:ring-red-200"
+                >
+                  Delete Account
                 </button>
-                <button onClick={handelLogOut} className="border border-black rounded-lg p-1">
+                <button
+                  onClick={handelLogOut}
+                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transform transition-transform duration-200 active:scale-95 focus:outline-none focus:ring-4 focus:ring-blue-200"
+                >
                   Log Out
                 </button>
               </div>
             </div>
-            <div className="w-full md:w-3/4 max-h-48 overflow-y-auto border-double border-2 border-highlight rounded-2xl px-6 py-2">
-              {userHistory.map((item, index) => (
-                <div key={index}>
-                  <div
-                    key={item._id}
-                    className="h-28 w-10/12 border border-purple-500 rounded-xl flex justify-around items-center m-4 overflow-hidden"
-                  >
-                    <div>
-                      <img
-                        src={item._doc.ImageLink}
-                        alt={item._doc.ItemName}
-                        className="w-32 h-20 md:h-32 rounded-lg md:w-44 mx-2"
-                      />
-                    </div>
-                    <div className="h-28 flex justify-around items-start flex-col w-20 md:w-64 mx-1 p-1">
-                      <p className="text-highlight font-bold text-sm md:text-xl">
-                        {item._doc.ItemName}
-                      </p>
-                      <p className="md:text-xl font-bold text-xs">
-                        {item._doc.ItemPrice} ₹
-                      </p>
-                      <p className="text-yellow-600 text-xs md:text-lg font-semibold">
-                        ⭐4.5/5
-                      </p>
-                      <p className="text-sm h-5 overflow-clip">
-                        {item._doc.ItemDescription}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))
-
-              }
-            </div>
           </div>
+            {/* User History  */}
+          <div className="w-full min-h-44 max-w-6xl mt-8 overflow-x-auto">
+          {userHistory && userHistory.length > 0 && (
+            <div className="w-full h-44 flex flex-wrap justify-center gap-4">
+              {userHistory.map((item, index) => (
+                <div
+                  key={item._doc._id}
+                  className="h-36 w-full border-2 border-purple-400 rounded-xl flex justify-around items-center m-2 overflow-hidden transition-shadow hover:shadow-lg shadow-sm hover:border-purple-500 bg-white"
+                  onClick={() => visitPendingOrders(item._doc._id)}
+                >
+                  <img
+                    src={item.coverImageLink.ImageLink}
+                    alt={item._doc.ItemName}
+                    className="w-32 h-24 object-cover"
+                  />
+                  <div className="p-2">
+                    <p className="font-bold text-base text-black">{`Order ${index + 1}`}</p>
+                    <p className="text-base font-semibold text-black">order status -<span className="text-red-500">{item._doc.orderStatus}</span></p>
+                    <p className="text-base font-semibold text-black">Total Price - <span className="text-green-500">{item._doc.TotalPrice} ₹</span></p>
+                    <p className="text-sm font-semibold text-black">Order time -<span className="text-blue-500">{item._doc.OrderTime}</span></p>
+                  </div>
+                  <Cancel id={item._doc._id}/>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
+        </div>
+        </div>
+
+        
       </div>
+
+
+
+
+
+
+
     </>
   );
 };
