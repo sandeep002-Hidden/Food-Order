@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-import User from "../models/user.model.js";
-import Item from "../models/items.model.js";
+import User from "../../models/user.model.js";
+import Item from "../../models/items.model.js";
 
 export default async function cartItems(req, res) {
   try {

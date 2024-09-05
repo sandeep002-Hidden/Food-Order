@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import User from "../models/user.model.js";
+import User from "../../models/user.model.js";
 
 export default async function handelGetUserDetails(req, res) {
   const token =req.cookies.orderNow;
@@ -13,6 +13,6 @@ export default async function handelGetUserDetails(req, res) {
 
     }
     catch(error){
-      return res.status(401).json({ message: error.message,sucess:flase });    }
+      return res.status(401).json({ message: error.message,success:false });    }
   
 }

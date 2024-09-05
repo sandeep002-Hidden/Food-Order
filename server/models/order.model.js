@@ -50,6 +50,14 @@ const OrderSchema=new mongoose.Schema({
         type:String,
         default:"waitting for pickup"
     },
+    DeliverAgentName:{
+        type:String,
+        default:""
+    },
+    DeliverAgentPhoneNo:{
+        type:String,
+        default:""
+    },
     OrderTime:{
         type:String
     }

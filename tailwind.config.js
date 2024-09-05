@@ -7,7 +7,16 @@ module.exports = {
         highlight: "rgb(110, 6, 242)",
       },
       minHeight: {
-        '50vh': '50vh', // Custom minHeight utility
+        '50vh': '50vh',
+      },
+      animation: {
+        fadeIn: 'fadeIn 0.5s ease-in-out',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
       },
     },
   },
@@ -18,8 +27,8 @@ module.exports = {
           display: "none",
         },
         ".no-scrollbar": {
-          "-ms-overflow-style": "none" /* IE and Edge */,
-          "scrollbar-width": "none" /* Firefox */,
+          "-ms-overflow-style": "none", /* IE and Edge */
+          "scrollbar-width": "none", /* Firefox */
         },
       });
     },

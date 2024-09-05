@@ -13,7 +13,9 @@ import AdminPanel from "./components/Admin/AdminPanel.jsx";
 import AdminSearch from "./components/Admin/ASearch.jsx";
 import AddItem from "./components/Admin/AddItem.jsx";
 import AdminProfile from "./components/Admin/AdminProfile.jsx"
+import APendingOrders from "./components/Admin/PendingOrders.jsx"
 import PendingOrders from "./components/pendingOrders.jsx"
+
 function App() {
   return (
     <BrowserRouter>
@@ -23,6 +25,7 @@ function App() {
         <Route path="/admin002/search" element={<AdminSearch />} />
         <Route path="/admin002/profile" element={<AdminProfile />} />
         <Route path="/admin002/addItems" element={<AddItem />} />
+        <Route path="/admin002/pendingOrders" element={<APendingOrders />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="myCart" element={<MyCart />} />

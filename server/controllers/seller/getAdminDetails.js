@@ -1,4 +1,4 @@
-import Seller from "../models/seller.model.js";
+import Seller from "../../models/seller.model.js";
 import jwt from "jsonwebtoken"
 export default async function getAdminDetails(req,res){
   const token =req.cookies.orderNow;

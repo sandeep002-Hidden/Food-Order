@@ -11,6 +11,8 @@ import adminRouter from "./routes/adminRoute.js";
 import sendEmail from "./middleware/nodeMailer.js";
 import Seller from "./models/seller.model.js";
 import cookieParser from "cookie-parser";
+import deliverAgentRouter from "./routes/deliverAgent.router.js"
+
 
 dotenv.config();
 
@@ -27,13 +29,15 @@ app.use(cookieParser())
 app.use(cors({
   origin: 'http://localhost:3000',
   credentials: true,
-}));app.use(express.json());
+}));
+app.use(express.json());
 
 app.use("/signup", signUpRouter);
 app.use("/login", loginRouter);
 app.use("/user", userRouter);
 app.use("/admin", adminRouter);
 app.use("/sendEmail", sendEmail);
+app.use("/agent",deliverAgentRouter);
 
 app.get("/", (req, res) => {
   res.json({ message: "Hello from server!" });

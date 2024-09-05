@@ -158,7 +158,7 @@ const Profile = () => {
 
                 <div className="border-double border-2 border-highlight rounded-2xl p-4">
                   <h1 className="text-lg font-bold">Delivery History</h1>
-                  {/* Delivery History content here */}
+                  <h1 className="text-lg font-bold">Canceled Orders</h1>
                 </div>
               </div>
 

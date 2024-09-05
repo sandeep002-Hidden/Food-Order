@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
-import Order from "../models/order.model.js";
-import User from "../models/user.model.js";
-import Item from "../models/items.model.js";
-import Seller from "../models/seller.model.js"
+import Order from "../../models/order.model.js";
+import User from "../../models/user.model.js";
+import Item from "../../models/items.model.js";
+import Seller from "../../models/seller.model.js"
 export default async function buyCartItems(req, res) {
     try {
         const { myCart, quantity } = req.body;

@@ -7,7 +7,6 @@ signUpRouter
   .get("/", (req, res) => {
     res.json({ signup: "Hello from Signup" });
   })
-
   .post("/", handelPostSignup);
 
 export default signUpRouter;

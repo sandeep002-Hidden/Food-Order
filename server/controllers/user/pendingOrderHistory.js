@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
-import User from "../models/user.model.js"
-import Item from "../models/items.model.js"
-import Order from "../models/order.model.js"
+import User from "../../models/user.model.js"
+import Item from "../../models/items.model.js"
+import Order from "../../models/order.model.js"
 export default async function pendingOrderHistory(req, res) {
 
   let userHistory = [];

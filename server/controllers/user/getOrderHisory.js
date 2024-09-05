@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import User from "../models/user.model.js"
+import User from "../../models/user.model.js"
 export default async function getOrderHisory(req,res){
     try {
         const token =req.cookies.orderNow;

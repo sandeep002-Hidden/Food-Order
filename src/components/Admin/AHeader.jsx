@@ -12,18 +12,12 @@ export default function AdminHeader(){
   useEffect(() => {
     const verifyToken = async () => {
       try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          console("Login To continue")
-          return;
-        }
-
         const response = await fetch(`http://localhost:8000/verify`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "x-auth-token": token,
           },
+          credentials:"include"
         });
         if (!response.ok) {
           setMessage("Error while verifying user, Login to continue");

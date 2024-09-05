@@ -1,4 +1,4 @@
-import Item from "../models/items.model.js";
+import Item from "../../models/items.model.js";
 
 export default async function findItem(req, res) {
   const item = req.body.Item;

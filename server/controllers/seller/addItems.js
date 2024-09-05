@@ -1,5 +1,5 @@
-import Item from "../models/items.model.js"
 import jwt from "jsonwebtoken"
+import Item from "../../models/items.model.js"
 export default async function addItems(req,res){
     try {
         const token =req.cookies.orderNow;

@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import Seller from "../models/seller.model.js"
+import Seller from "../../models/seller.model.js"
 export default async function updateAdminProfile(req,res){
     const SellerName=req.body.SellerName
     const token =req.cookies.orderNow;
