@@ -20,6 +20,14 @@ const DeliveryAgentSchema=new mongoose.Schema({
     OrderDelivered:{
         type:Array,
         default:[]
+    },
+    TotalEarnings:{
+        type:Number,
+        default:0
+    },
+    pickedUpOrders:{
+        type:Array,
+        default:[]
     }
 },{timestamps:true})
 const DeliveryAgent=mongoose.model("deliveryAgent",DeliveryAgentSchema);

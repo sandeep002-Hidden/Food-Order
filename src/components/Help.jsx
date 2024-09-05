@@ -135,6 +135,7 @@ export default function Help() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials:"include",
         body: JSON.stringify({ userEmail: email }),
       });
       const emailResponse = await emailRes.json();

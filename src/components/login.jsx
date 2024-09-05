@@ -26,10 +26,6 @@ export default function Login() {
             body: JSON.stringify(uData),
           });
           const data = await res.json();
-          console.log(data)
-          if (data.isAdmin === true) {
-            navigate("/admin002");
-          }
           if (res.ok) {
             navigate("/");
           } else {

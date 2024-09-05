@@ -13,13 +13,11 @@ import momo from "../images/momo.png";
 import mutton from "../images/mutton.png";
 import paneer from "../images/paneer.png";
 import AddToCart from "./Buttons/addToCartButton";
-import BuyNowBtn from "./Buttons/buyNow";
 
 export default function Search() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [itemResult, setItemResult] = useState([]);
-
   const handleInputChange = (event) => {
     const newQuery = event.target.value;
     setQuery(newQuery);
@@ -79,6 +77,7 @@ export default function Search() {
         body: JSON.stringify(Item),
       });
       const temp = await resultIem.json();
+      console.log(temp)
       setItemResult(temp);
     } catch (error) {
       console.log("Error occur while Finding items");
@@ -169,7 +168,6 @@ export default function Search() {
               </div>
               <div className="h-32 flex justify-around items-center flex-col">
                 <AddToCart id={item._id} />
-                <BuyNowBtn id={item._id} />
               </div>
             </div>
           ))}

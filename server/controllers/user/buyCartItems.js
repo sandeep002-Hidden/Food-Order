@@ -33,7 +33,8 @@ export default async function buyCartItems(req, res) {
         const now = new Date();
         const localTime = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
 
-        const updateCartPromises = myCart.map(async (item, index) => {
+        // Process cart items
+        for (const [index, item] of myCart.entries()) {
             try {
                 await Item.updateOne(
                     { _id: item._id },
@@ -47,6 +48,7 @@ export default async function buyCartItems(req, res) {
                     Time: localTime,
                 });
 
+                // Update user's cart and seller's pending deliveries
                 await User.updateOne({ _id: userId }, { $pull: { Cart: item._id } }, { session });
                 await Seller.updateOne(
                     { _id: item.SellerId },
@@ -54,14 +56,12 @@ export default async function buyCartItems(req, res) {
                     { session }
                 );
             } catch (error) {
-                await session.abortTransaction();
-                session.endSession();
+                // Throw the error to the outer catch block, no need to abort transaction here
                 throw new Error(`Failed to process item ${item.ItemName}. Please try again.`);
             }
-        });
+        }
 
-        await Promise.all(updateCartPromises);
-
+        // Get user and validate existence
         const user = await User.findOne({ _id: userId });
         if (!user) {
             await session.abortTransaction();
@@ -69,6 +69,7 @@ export default async function buyCartItems(req, res) {
             return res.status(404).json({ message: "User not found.", success: false });
         }
 
+        // Create the order
         const OrderUser = new Order({
             clientName: user.userName,
             clientEmail: user.userEmail,
@@ -85,19 +86,26 @@ export default async function buyCartItems(req, res) {
 
         await OrderUser.save({ session });
 
+        // Update user's pending orders
         await User.updateOne(
             { _id: userId },
             { $push: { PendingOrders: OrderUser._id } },
             { session }
         );
 
+        // Commit transaction
         await session.commitTransaction();
         session.endSession();
 
         return res.status(200).json({ message: "Order placed successfully", success: true });
+
     } catch (error) {
-        await session.abortTransaction();
+        // Abort transaction once in the outer catch block
+        if (session.inTransaction()) {
+            await session.abortTransaction();
+        }
         session.endSession();
-        return res.status(500).json({ message: "An unexpected error occurred. Please try again.", success: false });
+        console.error("Transaction error:", error);
+        return res.status(500).json({ message: error.message || "An unexpected error occurred. Please try again.", success: false });
     }
 }

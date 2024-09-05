@@ -46,6 +46,10 @@ const OrderSchema=new mongoose.Schema({
         type:Boolean,
         default:false
     },
+    isPickedUp:{
+        type:Boolean,
+        default:false
+    },
     orderStatus:{
         type:String,
         default:"waitting for pickup"
@@ -55,6 +59,10 @@ const OrderSchema=new mongoose.Schema({
         default:""
     },
     DeliverAgentPhoneNo:{
+        type:String,
+        default:""
+    },
+    DeliverAgentId:{
         type:String,
         default:""
     },

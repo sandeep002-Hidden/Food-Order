@@ -27,6 +27,9 @@ export default function Header() {
         if (data.role === "seller") {
           return navigate("/admin002");
         }
+        else if(data.role==="deliveryAgent"){
+          return navigate("/deliveryagent002")
+        }
       } catch (error) {
         setMessage("User verification failed:", error);
         setVerificationResult({ error: error.success });

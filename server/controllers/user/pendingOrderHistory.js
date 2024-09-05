@@ -21,7 +21,6 @@ export default async function pendingOrderHistory(req, res) {
     const userId = jwt.verify(token, process.env.JWTSECRETE).userId;
     const user = await User.findOne({ _id: userId }).select("PendingOrders -_id").session(session);
     const PendingOrders = user.PendingOrders;
-
     if (PendingOrders.length === 0) {
       await session.abortTransaction();
       session.endSession();

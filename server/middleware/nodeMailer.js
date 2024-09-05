@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import Seller from "../models/seller.model.js";
 import nodemailer from "nodemailer";
+import DeliveryAgent from "../models/deliveryAgent.model.js"
 
 export default async function sendEmail(req, res) {
   const max = 999999;
@@ -36,24 +37,34 @@ export default async function sendEmail(req, res) {
   };
   const email = req.body.userEmail;
   try {
-    await User.find({ userEmail: email }).then(async (result) => {
-      if (result[0] === undefined) {
-        await Seller.find({ SellerEmail: email }).then((result) => {
-          if (result[0] === undefined) {
-            return res.json({
-              message: "Provided Email is not a Authenticated User",
-            });
-          } else {
-            sendEmail(email);
-            return res.json({ Otp: otp });
-          }
-        });
+    const user = await User.findOne({ userEmail: email });
+      if (!user) {
+      const seller = await Seller.findOne({ SellerEmail: email });
+      if (!seller) {
+        const deliveryAgent = await DeliveryAgent.findOne({ DeliveryAgentEmail: email });
+        if (!deliveryAgent) {
+          return res.json({
+            message: "Provided email is not associated with any authenticated user.",
+            success:false
+          });
+        } else {
+          sendEmail(email);
+          return res.json({ Otp: otp,success:false
+          });
+        }
       } else {
         sendEmail(email);
-        return res.json({ Otp: otp });
+        return res.json({ Otp: otp,success:false
+        });
       }
-    });
+    } else {
+      sendEmail(email);
+      return res.json({ Otp: otp,success:true });
+    }
   } catch (error) {
-    return res.status(404).json({ message: "Email Not found" });
+    console.error(error);
+    return res.status(500).json({ message: "An error occurred while processing your request.",success:false
+    });
   }
+  
 }

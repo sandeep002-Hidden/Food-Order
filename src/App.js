@@ -15,7 +15,10 @@ import AddItem from "./components/Admin/AddItem.jsx";
 import AdminProfile from "./components/Admin/AdminProfile.jsx"
 import APendingOrders from "./components/Admin/PendingOrders.jsx"
 import PendingOrders from "./components/pendingOrders.jsx"
-
+import DAHOME from "./components/deliveryAgent/daHome.jsx"
+import VerifyCustomer from "./components/deliveryAgent/VerifyCustomer.jsx"
+import DeliverHistory from "./components/deliveryAgent/deliverHistory.jsx"
+import DAProfile from "./components/deliveryAgent/daProfile.jsx"
 function App() {
   return (
     <BrowserRouter>
@@ -26,6 +29,10 @@ function App() {
         <Route path="/admin002/profile" element={<AdminProfile />} />
         <Route path="/admin002/addItems" element={<AddItem />} />
         <Route path="/admin002/pendingOrders" element={<APendingOrders />} />
+        <Route path="/deliveryagent002" element={<DAHOME />} />
+        <Route path="/deliveryagent002/verifycustomer" element={<VerifyCustomer />} />
+        <Route path="/deliveryagent002/deliveredOrders" element={<DeliverHistory />} />
+        <Route path="/deliveryagent002/Profile" element={<DAProfile />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="myCart" element={<MyCart />} />
