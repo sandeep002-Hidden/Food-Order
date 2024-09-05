@@ -9,6 +9,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [userHistory, setuserHistory] = useState([])
+  const [userOHistory, setuserOHistory] = useState([])
   const [profileData, setProfileData] = useState({
     userName: "",
     userEmail: "",
@@ -156,8 +157,13 @@ const Profile = () => {
           credentials: "include"
         }
       );
+      const data= await response.json()
       if(!response.ok){
         setMessage(response.message)
+      }
+      else{
+        setuserOHistory(data.OrderHistory)
+        console.log(data.OrderHistory)
       }
     } catch (error) {
       setMessage(
@@ -279,17 +285,37 @@ const Profile = () => {
                   onClick={() => visitPendingOrders(item._id)}
                 >
                   <img
-                    src={item.coverImageLink.ImageLink}
-                    alt={`Order ${index + 1}`}
+                    src={item.coverImageLink.ImageLink||""}
+                    alt={`Order ${index + 1} `}
                     className="w-32 h-24 object-cover"
                   />
                   <div className="p-2">
                     <p className="font-bold text-base text-black">{`Order ${index + 1}`}</p>
-                    <p className="text-base font-semibold text-black">order status -<span className="text-red-500">{item.orderStatus}</span></p>
-                    <p className="text-base font-semibold text-black">Total Price - <span className="text-green-500">{item.TotalPrice+40} ₹</span></p>
-                    <p className="text-sm font-semibold text-black">Order time -<span className="text-blue-500">{item.OrderTime}</span></p>
+                    <p className="text-base font-semibold text-black">order status -<span className="text-red-500">{item.orderStatus||""}</span></p>
+                    <p className="text-base font-semibold text-black">Total Price - <span className="text-green-500">{item.TotalPrice+40||""} ₹</span></p>
+                    <p className="text-sm font-semibold text-black">Order time -<span className="text-blue-500">{item.OrderTime||""}</span></p>
                   </div>
                   <Cancel id={item._id}/>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+          <div className="w-full min-h-44 max-w-6xl mt-8 overflow-x-auto">
+          {userOHistory && userOHistory.length > 0 && (
+            <div className="w-full h-44 flex flex-wrap justify-center gap-4">
+              {userOHistory.map((item, index) => (
+                <div
+                  key={item._id}
+                  className="h-36 w-fit border-2 border-purple-400 rounded-xl flex justify-start items-center m-2 overflow-hidden transition-shadow hover:shadow-lg shadow-sm hover:border-purple-500 bg-white"
+                >
+                  <div className="p-2">
+                    <p className="font-bold text-base text-black">{`Order ${index + 1}`}</p>
+                    <p className="text-base font-semibold text-black">Delivery Agent Name -<span className="text-red-500">{item.DeliverAgentName||""}</span></p>
+                    <p className="text-base font-semibold text-black">Delivery Agent phoneNo - <span className="text-green-500">{item.DeliverAgentPhoneNo||""} ₹</span></p>
+                    <p className="text-sm font-semibold text-black">Total price -<span className="text-blue-500">{item.TotalPrice||""}</span></p>
+                    <p className="text-sm font-semibold text-black">No of Items -<span className="text-black">{item.Items.length}</span></p>
+                  </div>
                 </div>
               ))}
             </div>
