@@ -7,18 +7,22 @@ import BuyNowBtn from "./Buttons/buyNow";
 
 export default function Home() {
   const [items, setItems] = useState([]);
-
   const getItems = async () => {
-    const items = await fetch(`http://localhost:8000/user/getItems`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await items.json();
-    const itemObj = data.Item;
-    setItems(itemObj);
-    return
+    try {
+      const items = await fetch(`http://localhost:8000/user/getItems`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await items.json();
+      const itemObj = data.Item;
+      setItems(itemObj);
+      return
+    } catch (error) {
+      console.log(error.message)
+    }
+    
   };
   useEffect(() => {
     const fetchItems = async () => {

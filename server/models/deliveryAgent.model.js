@@ -6,31 +6,12 @@ const DeliveryAgentSchema=new mongoose.Schema({
     },
     DeliveryAgentEmail: {
         type: String,
-        required:true
+        required:true,
+        unique:true
     },
     DeliveryAgentPhoneNo:{
         type:String,
         required:true,
-    },
-    Country:{
-        type:String,
-        required:true,
-        default:"India",
-    },
-    State:{
-        type:String,
-        required:true
-    },
-    District:{
-        type:String,
-        required:true
-    },
-    Pin:{
-        type:String,
-        required:true
-    },
-    Location:{
-        type:String,
     },
     DeliveryCharge:{
         type:Number,
@@ -38,6 +19,7 @@ const DeliveryAgentSchema=new mongoose.Schema({
     },
     OrderDelivered:{
         type:Array,
+        default:[]
     }
 },{timestamps:true})
 const DeliveryAgent=mongoose.model("deliveryAgent",DeliveryAgentSchema);

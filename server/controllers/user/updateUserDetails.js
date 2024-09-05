@@ -1,33 +1,43 @@
 import jwt from "jsonwebtoken";
-import User from "../../models/user.model.js";
 import mongoose from "mongoose";
+import User from "../../models/user.model.js";
 
 export default async function updateUserDetails(req, res) {
+  const token = req.cookies.orderNow;
+  const userName = req.body.userName;
 
-  const token =req.cookies.orderNow;
-  const userName=req.body.userName
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
   try {
-    const session = await mongoose.startSession();
-  session.startTransaction();
-    const decodedToken = jwt.verify(token, process.env.JWTSECRETE);
-    try {
+    if (!token) {
+      await session.abortTransaction();
+      return res.status(403).json({ message: "No token provided", success: false });
+    }
 
-      await User.updateOne(
-        { _id: decodedToken.userId },
-        { $set: { userName: userName } }
-      )
-      .then((result) => {
-        
-        if (result.acknowledged === true) {
-          return res.json({ message: "Updated Success fully",success:true });
-        }
-      });
-    } catch (error) {
-      console.log("Error while fetching The information");
-      console.log(error);
+    const decodedToken = jwt.verify(token, process.env.JWTSECRETE);
+
+    const result = await User.updateOne(
+      { _id: decodedToken.userId },
+      { $set: { userName: userName } },
+      { session }
+    );
+
+    if (result.acknowledged) {
+      await session.commitTransaction();
+      return res.json({ message: "Updated Successfully", success: true });
+    } else {
+      await session.abortTransaction();
+      return res.status(400).json({ message: "Update failed", success: false });
     }
   } catch (error) {
-    return res.json({ message: "error occur while verifying token" });
+    console.error("Error occurred while updating user details:", error);
+    await session.abortTransaction();
+    return res.status(500).json({
+      message: "An error occurred while updating the user details",
+      success: false,
+    });
+  } finally {
+    session.endSession();
   }
 }

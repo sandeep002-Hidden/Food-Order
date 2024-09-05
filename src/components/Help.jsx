@@ -329,7 +329,7 @@ export default function Help() {
                   className="border border-black h-8 rounded-md p-1 my-2"
                   name="PhoneNo"
                   id="PhoneNo"
-                  value={sellerDetails.PhoneNo}
+                  value={sellerDetails.phoneNo}
                   onChange={handleChange}
                   required
                 />

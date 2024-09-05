@@ -10,8 +10,8 @@ export default async function findItem(req, res) {
         ]
       });
 
-    return res.json(items);
+    return res.status(401).json(items);
   } catch (error) {
-    return res.status(404).json({ message: "Error occur while Finding Items" });
+    return res.status(404).json({ message: error.message,success:false });
   }
 }

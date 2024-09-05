@@ -137,6 +137,7 @@ const Profile = () => {
       );
       const data = await response.json()
       setuserHistory(data.userHistory)
+      console.log(data.userHistory)
     } catch (error) {
       setMessage(
         "Error occur while updating Profile Details. Please try again!"
@@ -273,22 +274,22 @@ const Profile = () => {
             <div className="w-full h-44 flex flex-wrap justify-center gap-4">
               {userHistory.map((item, index) => (
                 <div
-                  key={item._doc._id}
+                  key={item._id}
                   className="h-36 w-full border-2 border-purple-400 rounded-xl flex justify-around items-center m-2 overflow-hidden transition-shadow hover:shadow-lg shadow-sm hover:border-purple-500 bg-white"
-                  onClick={() => visitPendingOrders(item._doc._id)}
+                  onClick={() => visitPendingOrders(item._id)}
                 >
                   <img
                     src={item.coverImageLink.ImageLink}
-                    alt={item._doc.ItemName}
+                    alt={`Order ${index + 1}`}
                     className="w-32 h-24 object-cover"
                   />
                   <div className="p-2">
                     <p className="font-bold text-base text-black">{`Order ${index + 1}`}</p>
-                    <p className="text-base font-semibold text-black">order status -<span className="text-red-500">{item._doc.orderStatus}</span></p>
-                    <p className="text-base font-semibold text-black">Total Price - <span className="text-green-500">{item._doc.TotalPrice} ₹</span></p>
-                    <p className="text-sm font-semibold text-black">Order time -<span className="text-blue-500">{item._doc.OrderTime}</span></p>
+                    <p className="text-base font-semibold text-black">order status -<span className="text-red-500">{item.orderStatus}</span></p>
+                    <p className="text-base font-semibold text-black">Total Price - <span className="text-green-500">{item.TotalPrice+40} ₹</span></p>
+                    <p className="text-sm font-semibold text-black">Order time -<span className="text-blue-500">{item.OrderTime}</span></p>
                   </div>
-                  <Cancel id={item._doc._id}/>
+                  <Cancel id={item._id}/>
                 </div>
               ))}
             </div>
