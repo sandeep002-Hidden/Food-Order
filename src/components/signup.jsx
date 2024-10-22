@@ -21,7 +21,7 @@ export default function SignUp() {
     }
     else {
       try {
-        await fetch(`http://localhost:8000/signup`, {
+        await fetch(`https://foodorderbackend-8yh4.onrender.com/signup`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

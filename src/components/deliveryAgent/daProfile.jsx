@@ -20,7 +20,7 @@ export default function DAProfile() {
 
     useEffect(() => {
         const getProfileDetails = async () => {
-            await fetch(`http://localhost:8000/agent/getProfileDetails`, {
+            await fetch(`https://foodorderbackend-8yh4.onrender.com/agent/getProfileDetails`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -36,7 +36,7 @@ export default function DAProfile() {
     }, [])
     const handelLogOut = async () => {
         try {
-        await fetch(`http://localhost:8000/user/logout`, {
+        await fetch(`https://foodorderbackend-8yh4.onrender.com/user/logout`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -58,7 +58,7 @@ export default function DAProfile() {
     } 
       const deleteAccount=async()=>{
         try {
-            await fetch(`http://localhost:8000/agent/deleteAccount`, {
+            await fetch(`https://foodorderbackend-8yh4.onrender.com/agent/deleteAccount`, {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",

@@ -10,7 +10,7 @@ export default function APendingOrders() {
         try {
             setLoading(true)
             const apendingOrders = async () => {
-                await fetch(`http://localhost:8000/admin/apendingOrders`, {
+                await fetch(`https://foodorderbackend-8yh4.onrender.com/admin/apendingOrders`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",

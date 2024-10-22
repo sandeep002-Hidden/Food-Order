@@ -9,7 +9,7 @@ export default function AdminPanel() {
         const getSellerItems = async () => {
             try {
                 setLoading(true)
-                const response = await fetch("http://localhost:8000/admin/getSellerItems", {
+                const response = await fetch("https://foodorderbackend-8yh4.onrender.com/admin/getSellerItems", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",

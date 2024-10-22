@@ -7,7 +7,7 @@ export default function BuyNowBtn(item) {
     const myCart = [temp]
     try {
       await fetch(
-        `http://localhost:8000/user/buyCartItem`,
+        `https://foodorderbackend-8yh4.onrender.com/user/buyCartItem`,
         {
           method: "POST",
           headers: {

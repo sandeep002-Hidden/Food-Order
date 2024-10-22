@@ -69,7 +69,7 @@ export default function Search() {
   const findItem = async (item) => {
     const Item = { Item: item.toLowerCase() };
     try {
-      const resultIem = await fetch(`http://localhost:8000/user/findItem`, {
+      const resultIem = await fetch(`https://foodorderbackend-8yh4.onrender.com/user/findItem`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

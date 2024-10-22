@@ -21,7 +21,7 @@ export default function AddItem() {
     setItemPrice("")
     setTypeOfDish("")
     try {
-      const res = await fetch(`http://localhost:8000/admin/addItems`, {
+      const res = await fetch(`https://foodorderbackend-8yh4.onrender.com/admin/addItems`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

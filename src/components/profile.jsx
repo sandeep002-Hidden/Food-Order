@@ -28,7 +28,7 @@ const Profile = () => {
     const fetchProfile = async () => {
 
       try {
-        const response = await fetch(`http://localhost:8000/user/profile`, {
+        const response = await fetch(`https://foodorderbackend-8yh4.onrender.com/user/profile`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -60,7 +60,7 @@ const Profile = () => {
     }
     try {
       const response = await fetch(
-        "http://localhost:8000/user/updateProfile",
+        "https://foodorderbackend-8yh4.onrender.com/user/updateProfile",
         {
           method: "post",
           headers: {
@@ -86,7 +86,7 @@ const Profile = () => {
 
   };
   const handelLogOut = async () => {
-    await fetch(`http://localhost:8000/user/logout`, {
+    await fetch(`https://foodorderbackend-8yh4.onrender.com/user/logout`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -104,7 +104,7 @@ const Profile = () => {
   };
   const deleteAccount = async () => {
     try {
-      const response = await fetch("http://localhost:8000/user/deleteAccount", {
+      const response = await fetch("https://foodorderbackend-8yh4.onrender.com/user/deleteAccount", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -127,7 +127,7 @@ const Profile = () => {
   const PendingOrder = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8000/user/pendingOrderHistory",
+        "https://foodorderbackend-8yh4.onrender.com/user/pendingOrderHistory",
         {
           method: "GET",
           headers: {
@@ -148,7 +148,7 @@ const Profile = () => {
   const orderHistory = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8000/user/getOrderHisory",
+        "https://foodorderbackend-8yh4.onrender.com/user/getOrderHisory",
         {
           method: "GET",
           headers: {

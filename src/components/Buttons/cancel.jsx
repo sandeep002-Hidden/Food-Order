@@ -6,7 +6,7 @@ export default function Cancel(id) {
         try{
 
         
-        await fetch("http://localhost:8000/user/cancelOrder",{
+        await fetch("https://foodorderbackend-8yh4.onrender.com/user/cancelOrder",{
             method: "POST",
             headers: {
               "Content-Type": "application/json",

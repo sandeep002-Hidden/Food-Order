@@ -7,7 +7,7 @@ export default function DAHOME() {
     useEffect(() => {
         const getOrders = async () => {
             try {
-                await fetch(`http://localhost:8000/agent/getallorders`, {
+                await fetch(`https://foodorderbackend-8yh4.onrender.com/agent/getallorders`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -31,7 +31,7 @@ export default function DAHOME() {
     }, [])
     const pickupOrder = async (id) => {
         try {
-            await fetch(`http://localhost:8000/agent/pickUpItem`, {
+            await fetch(`https://foodorderbackend-8yh4.onrender.com/agent/pickUpItem`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

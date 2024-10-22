@@ -25,7 +25,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await fetch("http://localhost:8000/admin/getDetails", {
+        const response = await fetch("https://foodorderbackend-8yh4.onrender.com/admin/getDetails", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -55,7 +55,7 @@ const Profile = () => {
       setLoading(true)
       try {
         const response = await fetch(
-          "http://localhost:8000/admin/updateProfile",
+          "https://foodorderbackend-8yh4.onrender.com/admin/updateProfile",
           {
             method: "POST",
             headers: {
@@ -84,7 +84,7 @@ const Profile = () => {
   const deleteAccount = async () => {
     try {
       setLoading(true)
-      const response = await fetch("http://localhost:8000/admin/deleteAccount", {
+      const response = await fetch("https://foodorderbackend-8yh4.onrender.com/admin/deleteAccount", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -106,7 +106,7 @@ const Profile = () => {
   const handelLogOut = async () => {
     try {
       setLoading(true)
-      await fetch(`http://localhost:8000/user/logout`, {
+      await fetch(`https://foodorderbackend-8yh4.onrender.com/user/logout`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

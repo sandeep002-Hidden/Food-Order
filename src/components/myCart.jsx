@@ -29,7 +29,7 @@ export default function MyCart() {
   const buyCartItems = async () => {
     try {
       await fetch(
-        `http://localhost:8000/user/buyCartItem`,
+        `https://foodorderbackend-8yh4.onrender.com/user/buyCartItem`,
         {
           method: "POST",
           headers: {
@@ -49,7 +49,7 @@ export default function MyCart() {
 
       try {
         setLoading(true)
-        const items = await fetch(`http://localhost:8000/user/getCartItems`, {
+        const items = await fetch(`https://foodorderbackend-8yh4.onrender.com/user/getCartItems`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -80,7 +80,7 @@ export default function MyCart() {
   const removeItem = async (index) => {
     const removeItem = myCart[index];
     const removeRes = await fetch(
-      `http://localhost:8000/user/removeItemFromCart`,
+      `https://foodorderbackend-8yh4.onrender.com/user/removeItemFromCart`,
       {
         method: "DELETE",
         headers: {

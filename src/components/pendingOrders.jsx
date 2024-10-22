@@ -19,7 +19,7 @@ export default function PendingOrders() {
             try {
                 setLoading(true)
                 const response = await fetch(
-                    "http://localhost:8000/user/getOrderItems",
+                    "https://foodorderbackend-8yh4.onrender.com/user/getOrderItems",
                     {
                         method: "POST",
                         headers: {

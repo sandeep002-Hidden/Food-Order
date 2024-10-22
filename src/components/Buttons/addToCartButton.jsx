@@ -4,7 +4,7 @@ export default function AddToCart(id){
           
           try {
             await fetch(
-              `http://localhost:8000/user/addToCart`,
+              `https://foodorderbackend-8yh4.onrender.com/user/addToCart`,
               {
                 method: "POST",
                 headers: {

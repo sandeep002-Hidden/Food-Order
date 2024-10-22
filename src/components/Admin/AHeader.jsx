@@ -10,7 +10,7 @@ export default function AdminHeader() {
   useEffect(() => {
     const verifyToken = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/verify`, {
+        const response = await fetch(`https://foodorderbackend-8yh4.onrender.com/verify`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

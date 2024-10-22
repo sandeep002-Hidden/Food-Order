@@ -13,7 +13,7 @@ export default function VerifyCustomer() {
     useEffect(() => {
         const getAgentPickups = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/agent/pickupitems`, {
+                const response = await fetch(`https://foodorderbackend-8yh4.onrender.com/agent/pickupitems`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -35,7 +35,7 @@ export default function VerifyCustomer() {
     }, [])
     const sendEmail = async (clientEmail) => {
         try {
-            const res = await fetch(`http://localhost:8000/sendEmail`, {
+            const res = await fetch(`https://foodorderbackend-8yh4.onrender.com/sendEmail`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -66,7 +66,7 @@ export default function VerifyCustomer() {
     }
     const deliverOrder = async (orderId) => {
         try {
-            const res = await fetch(`http://localhost:8000/agent/deliverOrder`, {
+            const res = await fetch(`https://foodorderbackend-8yh4.onrender.com/agent/deliverOrder`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

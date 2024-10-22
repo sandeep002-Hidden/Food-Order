@@ -41,7 +41,7 @@ export default function Help() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/user/profile`, {
+        const response = await fetch(`https://foodorderbackend-8yh4.onrender.com/user/profile`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -91,7 +91,7 @@ export default function Help() {
   const checkUser = async (a) => {
     try {
       setLoading(true)
-      await fetch(`http://localhost:8000/verify`, {
+      await fetch(`https://foodorderbackend-8yh4.onrender.com/verify`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -130,7 +130,7 @@ export default function Help() {
   const sendMail = async (email) => {
     try {
       setLoading(true)
-      const emailRes = await fetch(`http://localhost:8000/sendEmail`, {
+      const emailRes = await fetch(`https://foodorderbackend-8yh4.onrender.com/sendEmail`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -169,7 +169,7 @@ export default function Help() {
   const makeSellerProfile = async () => {
     try {
       setLoading(true)
-      const profileRes = await fetch(`http://localhost:8000/admin/makeAdmin`,
+      const profileRes = await fetch(`https://foodorderbackend-8yh4.onrender.com/admin/makeAdmin`,
         {
           method: "POST",
           headers: {
@@ -192,7 +192,7 @@ export default function Help() {
   };
   const makeDeliveryAgent = async () => {
     try {
-      const profileRes = await fetch(`http://localhost:8000/agent/makeAgent`,
+      const profileRes = await fetch(`https://foodorderbackend-8yh4.onrender.com/agent/makeAgent`,
         {
           method: "POST",
           headers: {

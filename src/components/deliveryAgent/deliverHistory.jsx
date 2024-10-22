@@ -11,7 +11,7 @@ export default function DeliverHistory() {
     useEffect(()=>{
         try {
             const getDeliveredItems=async()=>{
-                await fetch(`http://localhost:8000/agent/getDeliveredItems`, {
+                await fetch(`https://foodorderbackend-8yh4.onrender.com/agent/getDeliveredItems`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
