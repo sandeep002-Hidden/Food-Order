@@ -9,7 +9,7 @@ export default function Home() {
   const [items, setItems] = useState([]);
   const getItems = async () => {
     try {
-      const items = await fetch(`http://192.168.6.182:8000/user/getItems`, {
+      const items = await fetch(`hhttps://foodorderbackend-8yh4.onrender.com/user/getItems`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
